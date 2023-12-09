@@ -4,13 +4,47 @@
 	"name": "Go & PostgreSQL",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"avidanson.vscode-markdownlint",
+				"eamodio.gitlens",
+				"golang.go",
+				"ms-azuretools.vscode-docker",
+				"streetsidesoftware.code-spell-checker",
+				"yzhang.markdown-all-in-one"
+			],
+			"settings": {
+				"cSpell.words": [
+					"avidanson",
+					"azuretools",
+					"eamodio",
+					"yzhang"
+				],
+				"cSpell.ignoreRegExpList": [
+					"[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"  // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
+				],
+				"[markdown]": {
+					"editor.codeActionsOnSave": {
+						"source.fixAll.markdownlint": true
+					}
+				},
+				"[go]": {
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.organizeImports": true
+					},
+					"files.insertFinalNewline": true
+				}
+			}
+		}
+	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [5432],
