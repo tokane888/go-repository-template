@@ -13,6 +13,8 @@ services:
       - .env
 
     volumes:
+      # ../が1つで良いように見えるが、1つにするとコンテナ起動失敗するのでテンプレのままにする
+      # TODO: コンテナ化の意味が薄れるので調査の上マウント範囲縮小
       - ../..:/workspaces:cached
 
     # Overrides default command so things don't shut down after the process ends.
