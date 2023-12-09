@@ -13,6 +13,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"adpyke.vscode-sql-formatter",
 				"avidanson.vscode-markdownlint",
 				"eamodio.gitlens",
 				"golang.go",
@@ -41,6 +42,9 @@
 						"source.organizeImports": true
 					},
 					"files.insertFinalNewline": true
+				},
+				"[sql]": {
+					"editor.formatOnSave": true
 				}
 			}
 		}
