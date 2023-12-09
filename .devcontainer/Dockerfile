@@ -1,8 +1,11 @@
 FROM mcr.microsoft.com/devcontainers/go:1-1.21-bullseye
 
-# [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+# debian公式repoのpostgresql-client(psql)が古く、postgres本体のmajor verと不一致であるためpostgres公式repoからpsqlインストール
+RUN sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+     postgresql-client
 
 # [Optional] Uncomment the next lines to use go get to install anything else you need
 # USER vscode
