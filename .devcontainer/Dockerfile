@@ -9,7 +9,8 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN go install -v \
     golang.org/x/tools/cmd/goimports@latest \
     golang.org/x/tools/gopls@latest \
-    github.com/go-delve/delve/cmd/dlv@latest
+    github.com/go-delve/delve/cmd/dlv@latest \
+    golang.org/x/tools/cmd/stringer@latest
 
 # [Optional] Uncomment the next lines to use go get to install anything else you need
 # USER vscode
