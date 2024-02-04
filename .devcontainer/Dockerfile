@@ -6,6 +6,10 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
      postgresql-client
+RUN go install -v \
+    golang.org/x/tools/cmd/goimports@latest \
+    golang.org/x/tools/gopls@latest \
+    github.com/go-delve/delve/cmd/dlv@latest
 
 # [Optional] Uncomment the next lines to use go get to install anything else you need
 # USER vscode
