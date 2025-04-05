@@ -1,67 +1,75 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
-	"name": "Go",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/go:1-1.23-bookworm",
-	"features": {
-		"ghcr.io/devcontainers/features/github-cli:1": {}
-	},
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "go version",
-
-	// Configure tool-specific properties.
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"foxundermoon.shell-format",
-				"github.vscode-github-actions",
-				"golang.go",
-				"ms-azuretools.vscode-docker",
-				"streetsidesoftware.code-spell-checker",
-				"timonwong.shellcheck",
-				"yzhang.markdown-all-in-one"
-			]
-		},
-		"settings": {
-        "cSpell.words": [
-          "adpyke",
-          "avidanson",
-          "azuretools",
-          "eamodio",
-		  "foxundermoon",
-		  "shellcheck",
-		  "timonwong",
-          "yzhang"
-        ],
-        "cSpell.ignoreRegExpList": [
-          "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"  // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
-        ],
-        "[markdown]": {
-          "editor.codeActionsOnSave": {
-            "source.fixAll.markdownlint": "explicit"
-          }
-        },
-        "[go]": {
-          "editor.formatOnSave": true,
-          "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
-          },
-          "files.insertFinalNewline": true
-        },
-        "[sql]": {
-          "editor.formatOnSave": true
+    "name": "Go",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/devcontainers/go:1-1.23-bookworm",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+ 
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {},
+ 
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+ 
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "go version",
+ 
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "foxundermoon.shell-format",
+                "github.vscode-github-actions",
+                "golang.go",
+                "mohsen1.prettify-json",
+                "ms-azuretools.vscode-docker",
+                "streetsidesoftware.code-spell-checker",
+                "timonwong.shellcheck",
+                "yzhang.markdown-all-in-one"
+            ],
+            "settings": {
+                "cSpell.words": [
+                    "azuretools",
+                    "devcontainers",
+                    "foxundermoon",
+                    "mohsen1",
+                    "shellcheck",
+                    "timonwong",
+                    "yzhang"
+                ],
+                "cSpell.ignoreRegExpList": [
+                    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"  // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
+                ],
+                "[go]": {
+                    "editor.formatOnSave": true,
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": "explicit"
+                    },
+                    "files.insertFinalNewline": true
+                },
+                "[json]": {
+                    "editor.formatOnSave": true
+                },
+                "[markdown]": {
+                    "editor.codeActionsOnSave": {
+                        "source.fixAll.markdownlint": "explicit"
+                    }
+                },
+                "[sql]": {
+                    "editor.formatOnSave": true
+                }
+            }
         }
-      }
-	}
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+    },
+ 
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
+    ],
+    "postStartCommand": "bash ./.devcontainer/postStartCommand.sh"
+ 
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
 }
