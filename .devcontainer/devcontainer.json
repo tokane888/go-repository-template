@@ -69,6 +69,7 @@
         }
     },
  
+    // devcontainer上からgit pull/push可能にするための設定
     "mounts": [
         "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
     ],
