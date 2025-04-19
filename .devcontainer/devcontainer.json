@@ -36,9 +36,11 @@
                     "devcontainers",
                     "foxundermoon",
                     "gomod",
+                    "interactor",
                     "mohsen1",
                     "shellcheck",
                     "timonwong",
+                    "usecase",
                     "yzhang"
                 ],
                 "cSpell.ignoreRegExpList": [
