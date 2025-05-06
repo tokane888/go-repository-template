@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/tokane888/go-repository-template/config"
-	common "github.com/tokane888/go_common_module"
+	common "github.com/tokane888/go_common_module/v2"
 	"go.uber.org/zap"
 )
 
@@ -17,11 +17,12 @@ func main() {
 	if err != nil {
 		return
 	}
+	defer logger.Sync()
 
 	logger.Info("sample info")
 	logger.Info("additional field sample", zap.String("key", "value"))
 	logger.Warn("sample warn")
 	logger.Error("sample error")
 	err = errors.New("errorのサンプル")
-	logger.Errorw("DB Connection failed", err)
+	logger.Error("DB Connection failed", zap.Error(err))
 }
