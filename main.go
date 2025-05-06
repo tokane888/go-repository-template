@@ -3,13 +3,13 @@ package main
 import (
 	"errors"
 
-	"github.com/tokane888/go-repository-template/config"
+	"github.com/tokane888/go-repository-template/configs"
 	common "github.com/tokane888/go_common_module/v2"
 	"go.uber.org/zap"
 )
 
 func main() {
-	cfg, err := config.LoadConfig()
+	cfg, err := configs.LoadConfig()
 	if err != nil {
 		return
 	}
