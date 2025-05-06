@@ -6,3 +6,8 @@ go関連のrepositoryを作成する際にtemplateとして使用
 
 - ディレクトリ構成
   - [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従って作成
+
+## テンプレ使用時のTODO
+
+- `cmd/app/`の`app`の部分をプロジェクトに応じて調整
+- リポジトリ内から"TODO: "を検索し、修正
