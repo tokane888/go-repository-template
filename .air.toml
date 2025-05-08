@@ -1,0 +1,10 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  bin = "./tmp/main"
+  cmd = "go build -o ./tmp/main ./cmd/app/main.go"  # TODO: build対象の.goのパス設定
+  delay = 1000
+  exclude_dir = ["tmp", "vendor"]
+  exclude_regex = ["_test.go"]
+  include_ext = ["go"]
