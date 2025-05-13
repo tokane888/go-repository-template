@@ -1,0 +1,39 @@
+{
+    "cSpell.words": [
+        "azuretools",
+        "devcontainers",
+        "foxundermoon",
+        "godotenv",
+        "gomod",
+        "godotenv",
+        "infow",
+        "interactor",
+        "joho",
+        "mohsen1",
+        "shellcheck",
+        "timonwong",
+        "usecase",
+        "yzhang"
+    ],
+    "cSpell.ignoreRegExpList": [
+        "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"  // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
+    ],
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "files.insertFinalNewline": true
+    },
+    "[json]": {
+        "editor.formatOnSave": true
+    },
+    "[markdown]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll.markdownlint": "explicit"
+        }
+    },
+    "[sql]": {
+        "editor.formatOnSave": true
+    }
+}
