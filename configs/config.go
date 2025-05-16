@@ -3,6 +3,7 @@ package configs
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	common "github.com/tokane888/go_common_module/v2"
@@ -25,6 +26,12 @@ func LoadConfig() (*Config, error) {
 		return nil, fmt.Errorf("failed to load %s: %w", envFile, err)
 	}
 
+	timezoneName := getEnv("TIMEZONE", "Asia/Tokyo")
+	location, err := time.LoadLocation(timezoneName)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load timezone %s: %w", timezoneName, err)
+	}
+
 	cfg := &Config{
 		Env: env,
 		Logger: common.LoggerConfig{
@@ -32,6 +39,7 @@ func LoadConfig() (*Config, error) {
 			AppVersion: version,
 			Level:      getEnv("LOG_LEVEL", "info"),
 			Format:     getEnv("LOG_FORMAT", "local"),
+			Location:   location,
 		},
 	}
 	return cfg, nil
