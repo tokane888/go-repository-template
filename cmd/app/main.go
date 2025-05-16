@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"log"
 
 	"github.com/tokane888/go-repository-template/configs"
 	common "github.com/tokane888/go_common_module/v2"
@@ -11,10 +12,14 @@ import (
 func main() {
 	cfg, err := configs.LoadConfig()
 	if err != nil {
+		log.Println("failed to load config:", err)
 		return
 	}
 	logger, err := common.NewLogger(cfg.Logger)
 	if err != nil {
+		// zap loggerの初期化に失敗した場合のエラーハンドリング
+		// zapを使用できないため、標準のlogパッケージを使用
+		log.Println("failed to initialize logger:", err)
 		return
 	}
 	defer logger.Sync()
