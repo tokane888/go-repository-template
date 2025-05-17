@@ -4,7 +4,7 @@ go 1.23.8
 
 require (
 	github.com/joho/godotenv v1.5.1
-	github.com/tokane888/go_common_module/v2 v2.0.2
+	github.com/tokane888/go_common_module/v2 v2.0.3
 )
 
 require (
