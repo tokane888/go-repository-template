@@ -8,7 +8,8 @@ import (
 	common "github.com/tokane888/go_common_module/v2"
 )
 
-var version = "dev" // アプリのversion。デフォルトは開発版。cloud上ではbuild時に上書き
+// アプリのversion。デフォルトは開発版。cloud上ではbuild時にldflagsフラグ経由でバージョンを埋め込む
+var version = "dev"
 
 type Config struct {
 	Env    string
