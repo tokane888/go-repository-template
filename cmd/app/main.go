@@ -9,8 +9,11 @@ import (
 	"go.uber.org/zap"
 )
 
+// アプリのversion。デフォルトは開発版。cloud上ではbuild時に-ldflagsフラグ経由でバージョンを埋め込む
+var version = "dev"
+
 func main() {
-	cfg, err := configs.LoadConfig()
+	cfg, err := configs.LoadConfig(version)
 	if err != nil {
 		log.Println("failed to load config:", err)
 		return

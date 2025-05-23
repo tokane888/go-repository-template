@@ -8,9 +8,6 @@ import (
 	common "github.com/tokane888/go_common_module/v2"
 )
 
-// アプリのversion。デフォルトは開発版。cloud上ではbuild時にldflagsフラグ経由でバージョンを埋め込む
-var version = "dev"
-
 type Config struct {
 	Env    string
 	Logger common.LoggerConfig
@@ -18,7 +15,7 @@ type Config struct {
 }
 
 // LoadConfig loads environment variables into Config
-func LoadConfig() (*Config, error) {
+func LoadConfig(version string) (*Config, error) {
 	env := getEnv("ENV", "local")
 	envFile := fmt.Sprintf(".env/.env.%s", env)
 	err := godotenv.Load(envFile)
