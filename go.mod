@@ -1,4 +1,4 @@
-# TODO: モジュール名調整
+// TODO: モジュール名調整
 module github.com/tokane888/go-repository-template
 
 go 1.23.8
