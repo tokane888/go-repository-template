@@ -4,9 +4,15 @@ go関連のrepositoryを作成する際にtemplateとして使用
 
 ## 設計方針
 
-- goによるbackend構築目的
+- goによるbackend構築目的に使用
 - ディレクトリ構成
   - [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従って作成
+- ソースはクリーンアーキに従う
+- commit前todo
+  - 下記で整形
+    - `go fmt ./...`
+  - 下記で静的解析し、警告対応
+    - `go vet ./...`
 
 ## テンプレ使用時のTODO
 
