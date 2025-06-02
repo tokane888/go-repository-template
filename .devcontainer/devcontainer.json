@@ -22,6 +22,7 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "davidanson.vscode-markdownlint",
                 "foxundermoon.shell-format",
                 "github.vscode-github-actions",
                 "golang.go",
@@ -34,6 +35,7 @@
             "settings": {
                 "cSpell.words": [
                     "azuretools",
+                    "davidanson",
                     "devcontainers",
                     "foxundermoon",
                     "godotenv",
