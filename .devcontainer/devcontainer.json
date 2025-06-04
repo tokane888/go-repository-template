@@ -37,6 +37,7 @@
                     "azuretools",
                     "davidanson",
                     "devcontainers",
+                    "dnsutils",
                     "foxundermoon",
                     "godotenv",
                     "gomod",
@@ -80,6 +81,9 @@
     "mounts": [
         "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
     ],
+    // デバッグ用にdigインストール
+    "postCreateCommand": "sudo apt-get update -y && sudo apt-get install -y dnsutils",
+
     "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
     
     "containerEnv": {
