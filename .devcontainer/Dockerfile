@@ -18,6 +18,9 @@ RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh 
 
 # install apt packages
 RUN apt-get update -y
-RUN apt-get install -y dnsutils
+RUN apt-get install -y dnsutils npm
 
 RUN go install github.com/evilmartians/lefthook@latest
+
+# install npm packages
+RUN npm install -g dprint
