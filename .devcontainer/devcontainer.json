@@ -57,24 +57,20 @@
                 "cSpell.ignoreRegExpList": [
                     "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"  // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
                 ],
+                "editor.formatOnSave": true,
+                "[dockerfile]": {
+                    "editor.formatOnSave": true
+                },
                 "[go]": {
-                    "editor.formatOnSave": true,
                     "editor.codeActionsOnSave": {
                         "source.organizeImports": "explicit"
                     },
                     "files.insertFinalNewline": true
                 },
-                "[json]": {
-                    "editor.formatOnSave": true
-                },
                 "[markdown]": {
-                    "editor.formatOnSave": true,
                     "editor.codeActionsOnSave": {
                         "source.fixAll.markdownlint": "explicit"
                     }
-                },
-                "[sql]": {
-                    "editor.formatOnSave": true
                 }
             }
         }
