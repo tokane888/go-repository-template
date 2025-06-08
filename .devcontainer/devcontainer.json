@@ -82,9 +82,10 @@
     "mounts": [
         "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
     ],
-    // デバッグ用にdigインストール
-    "postCreateCommand": "sudo apt-get update -y && sudo apt-get install -y dnsutils",
+    // 各種パッケージインストール
+    "postCreateCommand": "sudo bash ./.devcontainer/postCreateCommand.sh",
 
+    // git pullをdevcontainer上で実行可能にするための設定
     "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
     
     "containerEnv": {
