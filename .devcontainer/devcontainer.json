@@ -1,103 +1,103 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
-    "name": "Go",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "features": {
-        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {}
-    },
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    // "features": {},
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // "forwardPorts": [],
-    // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "go version",
-    // Configure tool-specific properties.
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "adpyke.vscode-sql-formatter", // dprintのSQL正式対応までの暫定対応
-                "akamud.vscode-codemetrics",
-                "dprint.dprint",
-                "foxundermoon.shell-format",
-                "github.vscode-github-actions",
-                "golang.go",
-                "ms-azuretools.vscode-docker",
-                "streetsidesoftware.code-spell-checker",
-                "timonwong.shellcheck",
-                "yzhang.markdown-all-in-one"
-            ],
-            "settings": {
-                "cSpell.words": [
-                    "adpyke",
-                    "akamud",
-                    "azuretools",
-                    "codemetrics",
-                    "devcontainers",
-                    "dnsutils",
-                    "evilmartians",
-                    "foxundermoon",
-                    "godotenv",
-                    "gomod",
-                    "godotenv",
-                    "infow",
-                    "interactor",
-                    "joho",
-                    "lefthook",
-                    "malva",
-                    "mohsen1",
-                    "shellcheck",
-                    "timonwong",
-                    "usecase",
-                    "yzhang"
-                ],
-                "cSpell.ignoreRegExpList": [
-                    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"  // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
-                ],
-                "editor.formatOnSave": true,
-                "[dockerfile]": {
-                    "editor.defaultFormatter": "dprint.dprint"
-                },
-                "[go]": {
-                    "editor.codeActionsOnSave": {
-                        "source.organizeImports": "explicit"
-                    },
-                    "files.insertFinalNewline": true
-                },
-                "[json]": {
-                    // 明示的に指定しないと動作しなかったため、設定
-                    "editor.defaultFormatter": "dprint.dprint"
-                },
-                "[markdown]": {
-                    "editor.codeActionsOnSave": {
-                        "source.fixAll.markdownlint": "explicit"
-                    },
-                    "editor.defaultFormatter": "dprint.dprint"
-                },
-                "[sql]": {
-                    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
-                },
-                // yml, yamlの両方を書いた方が安全とのことなので記載
-                "[yaml]": {
-                    "editor.defaultFormatter": "dprint.dprint"
-                },
-                "[yml]": {
-                    "editor.defaultFormatter": "dprint.dprint"
-                }
-            }
+  "name": "Go",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "go version",
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "adpyke.vscode-sql-formatter", // dprintのSQL正式対応までの暫定対応
+        "akamud.vscode-codemetrics",
+        "dprint.dprint",
+        "foxundermoon.shell-format",
+        "github.vscode-github-actions",
+        "golang.go",
+        "ms-azuretools.vscode-docker",
+        "streetsidesoftware.code-spell-checker",
+        "timonwong.shellcheck",
+        "yzhang.markdown-all-in-one"
+      ],
+      "settings": {
+        "cSpell.words": [
+          "adpyke",
+          "akamud",
+          "azuretools",
+          "codemetrics",
+          "devcontainers",
+          "dnsutils",
+          "evilmartians",
+          "foxundermoon",
+          "godotenv",
+          "gomod",
+          "godotenv",
+          "infow",
+          "interactor",
+          "joho",
+          "lefthook",
+          "malva",
+          "mohsen1",
+          "shellcheck",
+          "timonwong",
+          "usecase",
+          "yzhang"
+        ],
+        "cSpell.ignoreRegExpList": [
+          "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
+        ],
+        "editor.formatOnSave": true,
+        "[dockerfile]": {
+          "editor.defaultFormatter": "dprint.dprint"
+        },
+        "[go]": {
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          },
+          "files.insertFinalNewline": true
+        },
+        "[json]": {
+          // 明示的に指定しないと動作しなかったため、設定
+          "editor.defaultFormatter": "dprint.dprint"
+        },
+        "[markdown]": {
+          "editor.codeActionsOnSave": {
+            "source.fixAll.markdownlint": "explicit"
+          },
+          "editor.defaultFormatter": "dprint.dprint"
+        },
+        "[sql]": {
+          "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+        },
+        // yml, yamlの両方を書いた方が安全とのことなので記載
+        "[yaml]": {
+          "editor.defaultFormatter": "dprint.dprint"
+        },
+        "[yml]": {
+          "editor.defaultFormatter": "dprint.dprint"
         }
-    },
-    // devcontainer上からgit pull/push可能にするための設定
-    "mounts": [
-        "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
-    ],
-    "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
-    "containerEnv": {
-        "TZ": "Asia/Tokyo"
+      }
     }
-    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
+  },
+  // devcontainer上からgit pull/push可能にするための設定
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
+  ],
+  "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
+  "containerEnv": {
+    "TZ": "Asia/Tokyo"
+  }
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }
