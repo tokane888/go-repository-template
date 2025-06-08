@@ -7,5 +7,9 @@ pre-commit:
       run: echo "{staged_files}" | grep '\.go$' | xargs -r go vet
     dprint-fmt:
       run: |
-        echo "{staged_files}" | grep -E '\.(Dockerfile|json|md|sql|yaml|yml)$' | xargs -r dprint fmt
+        files=$(echo "{staged_files}" | grep -E '(Dockerfile$|\.json$|\.md$|\.ya?ml$)' || true)
+        if [ -n "$files" ]; then
+          echo "$files" # フォーマット対象のファイル名出力(go fmt等では出力されるが、dprintでは出力されないため)
+          echo "$files" | xargs -r dprint fmt
+        fi
       stage_fixed: true
