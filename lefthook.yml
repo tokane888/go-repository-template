@@ -5,3 +5,7 @@ pre-commit:
       stage_fixed: true
     go-vet:
       run: echo "{staged_files}" | grep '\.go$' | xargs -r go vet
+    dprint-fmt:
+      run: |
+        echo "{staged_files}" | grep -E '\.(Dockerfile|json|md|sql|yaml|yml)$' | xargs -r dprint fmt
+      stage_fixed: true
