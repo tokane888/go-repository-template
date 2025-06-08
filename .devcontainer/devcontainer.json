@@ -82,10 +82,6 @@
     "mounts": [
         "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
     ],
-    // 各種パッケージインストール
-    "postCreateCommand": "sudo bash ./.devcontainer/postCreateCommand.sh",
-
-    // git pullをdevcontainer上で実行可能にするための設定
     "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
     
     "containerEnv": {
