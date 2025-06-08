@@ -78,6 +78,7 @@
           "editor.defaultFormatter": "dprint.dprint"
         },
         "[sql]": {
+          // dprintのSQL正式対応までの暫定対応
           "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
         },
         // yml, yamlの両方を書いた方が安全とのことなので記載
