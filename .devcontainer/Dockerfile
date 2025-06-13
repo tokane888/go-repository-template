@@ -18,7 +18,12 @@ RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh 
 
 # install apt packages
 RUN apt-get update -y
-RUN apt-get install -y dnsutils npm
+RUN apt-get install -y dnsutils
+
+# install nodejs and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs
 
 RUN go install github.com/evilmartians/lefthook@latest
 
