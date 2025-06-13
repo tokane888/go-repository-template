@@ -57,6 +57,12 @@
         "cSpell.ignoreRegExpList": [
           "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
         ],
+        "cSpell.ignorePaths": [
+          ".devcontainer/devcontainer.json",
+          ".vscode",
+          "go.mod",
+          "go.sum"
+        ],
         "editor.formatOnSave": true,
         "[dockerfile]": {
           "editor.defaultFormatter": "dprint.dprint"
