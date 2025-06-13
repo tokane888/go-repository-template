@@ -28,4 +28,4 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 RUN go install github.com/evilmartians/lefthook@latest
 
 # install npm packages
-RUN npm install -g dprint
+RUN npm install -g dprint cspell
