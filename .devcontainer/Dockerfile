@@ -18,7 +18,7 @@ RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh 
 
 # install nodejs and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get update \
+    && apt-get update -y \
     && apt-get install -y nodejs
 
 RUN go install github.com/evilmartians/lefthook@latest
