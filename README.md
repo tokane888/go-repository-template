@@ -14,9 +14,6 @@ go関連のrepositoryを作成する際にtemplateとして使用
 - ディレクトリ構成は下記に従う
   - [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従って作成
 - 設計はクリーンアーキに従う
-- commit前todo
-  - 下記で静的解析し、警告対応
-    - `go vet ./...`
 
 ## テンプレ使用時のTODO
 
