@@ -70,11 +70,11 @@
           "editor.defaultFormatter": "dprint.dprint"
         },
         "[go]": {
+          "editor.defaultFormatter": "golang.go",
           "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
           },
-          "files.insertFinalNewline": true,
-          "useLanguageServer": true
+          "files.insertFinalNewline": true
         },
         "gopls": {
           "formatting.gofumpt": true
