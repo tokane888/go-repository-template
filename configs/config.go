@@ -8,6 +8,7 @@ import (
 	common "github.com/tokane888/go_common_module/v2"
 )
 
+// Config 環境変数を読み取り、各struct向けのConfigを保持
 type Config struct {
 	Env    string
 	Logger common.LoggerConfig
@@ -17,7 +18,7 @@ type Config struct {
 // LoadConfig loads environment variables into Config
 func LoadConfig(version string) (*Config, error) {
 	env := getEnv("ENV", "local")
-	envFile := fmt.Sprintf(".env/.env.%s", env)
+	envFile := ".env/.env." + env
 	err := godotenv.Load(envFile)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load %s: %w", envFile, err)
