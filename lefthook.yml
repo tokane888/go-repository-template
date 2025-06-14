@@ -1,10 +1,8 @@
 pre-commit:
   commands:
-    go-fumpt:
-      run: echo "{staged_files}" | grep '\.go$' | xargs -r gofumpt -l -w
+    golangci-lint:
+      run: echo "{staged_files}" | grep '\.go$' | xargs -r golangci-lint run --fix
       stage_fixed: true
-    go-vet:
-      run: echo "{staged_files}" | grep '\.go$' | xargs -r go vet
     dprint-fmt:
       run: |
         files=$(echo "{staged_files}" | grep -E '(Dockerfile$|\.json$|\.md$|\.ya?ml$)' || true)
