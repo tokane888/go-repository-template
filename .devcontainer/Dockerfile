@@ -1,27 +1,19 @@
 FROM mcr.microsoft.com/devcontainers/go:1-1.23-bookworm
 
-# Go 1.24 を手動でインストール（lefthookのインストールに必要なため）
-# テンプレ改修TODO: 公式で1.24のイメージが出たら、これを削除
-ENV GO_VERSION=1.24.0
-RUN curl -LO https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm -rf /usr/local/go && \
-    tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
-    rm go${GO_VERSION}.linux-amd64.tar.gz
-# go toolを1つインストールして強制的に /go/pkg を作らせ、/go/pkgの所有者を調整
-# テンプレ改修TODO: go 1.24公式イメージが出たらここも削除
-RUN go install github.com/evilmartians/lefthook@latest || true
-RUN chown -R vscode:golang /usr/local/go /go/pkg /go/bin /go/src
-ENV PATH="/usr/local/go/bin:${PATH}"
-
 # install air
 RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b /usr/local/bin
 
 # install nodejs and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get update -y \
+    && apt-get update \
     && apt-get install -y nodejs
 
-RUN go install github.com/evilmartians/lefthook@latest
-
 # install npm packages
-RUN npm install -g dprint cspell
+RUN npm install -g dprint
+RUN npm install -g lefthook
+
+# install other packages
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.1.6
+# /go/pkg/mod/cache/download/ 配下のownerがrootになることを防ぐためvscode user使用
+USER vscode
+RUN go install mvdan.cc/gofumpt@latest

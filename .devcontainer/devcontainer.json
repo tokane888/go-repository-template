@@ -41,14 +41,16 @@
           "evilmartians",
           "foxundermoon",
           "godotenv",
+          "gofumpt",
           "gomod",
+          "godotenv",
           "infow",
           "interactor",
           "joho",
           "lefthook",
           "malva",
           "mohsen1",
-          "multierr",
+          "nolint",
           "shellcheck",
           "timonwong",
           "usecase",
@@ -58,10 +60,10 @@
           "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
         ],
         "cSpell.ignorePaths": [
+          // vscode拡張, libの名前等固有名詞が多いファイルはspell check対象から除外
           ".devcontainer/devcontainer.json",
-          ".vscode",
-          "go.mod",
-          "go.sum"
+          ".devcontainer/Dockerfile",
+          ".golangci.yml"
         ],
         "editor.formatOnSave": true,
         "[dockerfile]": {
@@ -71,10 +73,17 @@
           "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
           },
-          "files.insertFinalNewline": true
+          "files.insertFinalNewline": true,
+          "useLanguageServer": true
+        },
+        "gopls": {
+          "formatting.gofumpt": true
         },
         "[json]": {
           // 明示的に指定しないと動作しなかったため、設定
+          "editor.defaultFormatter": "dprint.dprint"
+        },
+        "[jsonc]": {
           "editor.defaultFormatter": "dprint.dprint"
         },
         "[markdown]": {
