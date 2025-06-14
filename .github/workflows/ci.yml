@@ -1,10 +1,8 @@
-name: CI
+name: Test and Lint
 
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
   test:
@@ -26,8 +24,6 @@ jobs:
           ~/.cache/go-build
           ~/go/pkg/mod
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
 
     - name: Download dependencies
       run: go mod download
@@ -54,8 +50,6 @@ jobs:
           ~/.cache/go-build
           ~/go/pkg/mod
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
 
     - name: Download dependencies
       run: go mod download
