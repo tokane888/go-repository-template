@@ -1,0 +1,29 @@
+{
+  "words": [
+    "adpyke",
+    "akamud",
+    "azuretools",
+    "codemetrics",
+    "devcontainers",
+    "dnsutils",
+    "evilmartians",
+    "foxundermoon",
+    "godotenv",
+    "gomod",
+    "infow",
+    "interactor",
+    "joho",
+    "lefthook",
+    "malva",
+    "mohsen1",
+    "multierr",
+    "nolint",
+    "shellcheck",
+    "timonwong",
+    "usecase",
+    "yzhang"
+  ],
+  "ignoreRegExpList": [
+    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
+  ]
+}

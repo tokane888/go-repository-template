@@ -31,34 +31,6 @@
         "yzhang.markdown-all-in-one"
       ],
       "settings": {
-        "cSpell.words": [
-          "adpyke",
-          "akamud",
-          "azuretools",
-          "codemetrics",
-          "devcontainers",
-          "dnsutils",
-          "evilmartians",
-          "foxundermoon",
-          "godotenv",
-          "gofumpt",
-          "gomod",
-          "godotenv",
-          "infow",
-          "interactor",
-          "joho",
-          "lefthook",
-          "malva",
-          "mohsen1",
-          "nolint",
-          "shellcheck",
-          "timonwong",
-          "usecase",
-          "yzhang"
-        ],
-        "cSpell.ignoreRegExpList": [
-          "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
-        ],
         "cSpell.ignorePaths": [
           // vscode拡張, libの名前等固有名詞が多いファイルはspell check対象から除外
           ".devcontainer/devcontainer.json",
