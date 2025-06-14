@@ -1,0 +1,44 @@
+version: 2
+
+linters-settings:
+  goimports:
+    local-prefixes: github.com/tokane888/go-repository-template # TODO: リポジトリ名に変更
+  govet:
+    enable-all: true
+    disable:
+      - fieldalignment
+  nolintlint:
+    allow-leading-space: false
+    allow-unused: false
+    require-explanation: true
+    require-specific: true
+
+linters:
+  disable-all: true
+  enable:
+    # エラーチェック系（必須）
+    - errcheck # エラーチェックの漏れを検出
+    - errorlint # エラー処理のベストプラクティス
+    - govet # コンパイルエラーや疑わしいコードを検出
+    - staticcheck # 高度な静的解析
+
+    # コード品質系（重要）
+    - gocritic # コードの改善提案
+    - gosec # セキュリティチェック
+    - ineffassign # 無効な代入の検出
+    - noctx # contextの使用漏れ
+    - rowserrcheck # データベース操作のエラーチェック
+    - sqlclosecheck # SQLのクローズ漏れ
+
+    # パフォーマンス系
+    - perfsprint # 文字列連結の最適化
+
+formatters:
+  disable-all: true
+  enable:
+    - gofumpt
+    - goimports
+
+issues:
+  exclude:
+    - EXC0001
