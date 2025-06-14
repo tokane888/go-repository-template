@@ -26,6 +26,7 @@ func main() {
 		log.Println("failed to initialize logger:", err)
 		return
 	}
+	//nolint: errcheck
 	defer logger.Sync()
 
 	logger.Info("sample info")
