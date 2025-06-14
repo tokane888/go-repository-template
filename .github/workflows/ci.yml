@@ -57,6 +57,6 @@ jobs:
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v6
       with:
-        version: latest
+        version: v1.61.0
         args: --config=.golangci.yml
       continue-on-error: true
