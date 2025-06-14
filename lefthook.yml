@@ -1,7 +1,7 @@
 pre-commit:
   commands:
-    go-fmt:
-      run: echo "{staged_files}" | grep '\.go$' | xargs -r go fmt
+    go-fumpt:
+      run: echo "{staged_files}" | grep '\.go$' | xargs -r gofumpt -l -w
       stage_fixed: true
     go-vet:
       run: echo "{staged_files}" | grep '\.go$' | xargs -r go vet
