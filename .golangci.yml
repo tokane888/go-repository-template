@@ -1,3 +1,5 @@
+version: 2
+
 linters-settings:
   goimports:
     local-prefixes: github.com/tokane888/go-repository-template # TODO: リポジトリ名に変更
@@ -25,6 +27,12 @@ linters:
 
     # パフォーマンス系
     - perfsprint # 文字列連結の最適化
+
+formatters:
+  disable-all: true
+  enable:
+    - gofumpt
+    - goimports
 
 issues:
   exclude:
