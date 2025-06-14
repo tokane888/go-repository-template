@@ -35,7 +35,8 @@
           // vscode拡張, libの名前等固有名詞が多いファイルはspell check対象から除外
           ".devcontainer/devcontainer.json",
           ".devcontainer/Dockerfile",
-          ".golangci.yml"
+          ".golangci.yml",
+          "lefthook.yml"
         ],
         "editor.formatOnSave": true,
         "[dockerfile]": {
