@@ -1,20 +1,9 @@
-version: 2
+version: "2"
 
-linters-settings:
-  goimports:
-    local-prefixes: github.com/tokane888/go-repository-template # TODO: リポジトリ名に変更
-  govet:
-    enable-all: true
-    disable:
-      - fieldalignment
-  nolintlint:
-    allow-leading-space: false
-    allow-unused: false
-    require-explanation: true
-    require-specific: true
+run:
+  go: "1.21"
 
 linters:
-  disable-all: true
   enable:
     # エラーチェック系（必須）
     - errcheck # エラーチェックの漏れを検出
@@ -32,13 +21,20 @@ linters:
 
     # パフォーマンス系
     - perfsprint # 文字列連結の最適化
+  settings:
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+  exclusions:
+    rules:
+      # test fileで一部のlinterを無効化
+      - path: _test\.go
+        linters:
+          - errcheck
+          - gosec
 
 formatters:
-  disable-all: true
   enable:
     - gofumpt
     - goimports
-
-issues:
-  exclude:
-    - EXC0001
