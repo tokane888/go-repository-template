@@ -80,7 +80,7 @@
     }
   },
   "mounts": [
-    // Cursorでまれに.gitconfigが自動でマウントされないことがあるため、明示的にマウント
+    // まれに.gitconfigが自動でマウントされないことがあるため、明示的にマウント
     "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
     // devcontainer上からgit pull/push可能にするための設定
     "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached"
