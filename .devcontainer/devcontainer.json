@@ -7,6 +7,8 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+
+    // keyring等でOSが保持している認証情報はマウント出来ないので、その場合はlocalで実行
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   // Features to add to the dev container. More info: https://containers.dev/features.
