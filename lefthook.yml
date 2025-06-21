@@ -1,7 +1,7 @@
 pre-commit:
   commands:
     golangci-lint:
-      run: echo "{staged_files}" | grep '\.go$' | xargs -r golangci-lint run --fix
+      run: echo "{staged_files}" | tr ' ' '\n' | grep '\.go$' | grep -v '(go.mod|go.sum)' | xargs -r golangci-lint run --fix
       stage_fixed: true
     dprint-fmt:
       run: |
