@@ -43,9 +43,7 @@
           "lefthook.yml"
         ],
         "editor.formatOnSave": true,
-        "[dockerfile]": {
-          "editor.defaultFormatter": "dprint.dprint"
-        },
+        "editor.defaultFormatter": "dprint.dprint",
         "[go]": {
           "editor.defaultFormatter": "golang.go",
           "editor.codeActionsOnSave": {
@@ -56,13 +54,6 @@
         "gopls": {
           "formatting.gofumpt": true
         },
-        "[json]": {
-          // 明示的に指定しないと動作しなかったため、設定
-          "editor.defaultFormatter": "dprint.dprint"
-        },
-        "[jsonc]": {
-          "editor.defaultFormatter": "dprint.dprint"
-        },
         "[markdown]": {
           "editor.codeActionsOnSave": {
             "source.fixAll.markdownlint": "explicit"
@@ -72,13 +63,6 @@
         "[sql]": {
           // dprintのSQL正式対応までの暫定対応
           "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
-        },
-        // yml, yamlの両方を書いた方が安全とのことなので記載
-        "[yaml]": {
-          "editor.defaultFormatter": "dprint.dprint"
-        },
-        "[yml]": {
-          "editor.defaultFormatter": "dprint.dprint"
         }
       }
     }
