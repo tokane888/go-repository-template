@@ -14,7 +14,7 @@ pre-push:
     golangci-lint:
       # プロジェクト全体に対してlintを実行
       run: |
-        # 現在のディレクトリ内のすべてのGoファイルに対してlintを実行
+        # すべてのGoファイルに対してlintを実行
         golangci-lint run ./... --fix
 
         # 修正があった場合は警告を表示
