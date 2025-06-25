@@ -26,7 +26,7 @@
         "dprint.dprint",
         "foxundermoon.shell-format",
         "github.vscode-github-actions",
-        "golang.go",
+        "golang.go@prerelease",
         "ms-azuretools.vscode-docker",
         "streetsidesoftware.code-spell-checker",
         "timonwong.shellcheck",
@@ -49,7 +49,20 @@
           "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
           },
-          "files.insertFinalNewline": true
+          "files.insertFinalNewline": true,
+          "lintTool": "golangci-lint",
+          "lintFlags": [
+            "--path-mode=abs",
+            "--fast-only"
+          ],
+          "formatTool": "custom",
+          "alternateTools": {
+            "customFormatter": "golangci-lint"
+          },
+          "formatFlags": [
+            "fmt",
+            "--stdin"
+          ]
         },
         "gopls": {
           "formatting.gofumpt": true

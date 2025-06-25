@@ -1,8 +1,5 @@
 pre-commit:
   commands:
-    golangci-lint:
-      run: echo "{staged_files}" | tr ' ' '\n' | grep '\.go$' | grep -v '(go.mod|go.sum)' | xargs -r golangci-lint run --fix
-      stage_fixed: true
     dprint-fmt:
       run: |
         files=$(echo "{staged_files}" | grep -E '(Dockerfile$|\.json$|\.md$|\.ya?ml$)' || true)
@@ -11,3 +8,18 @@ pre-commit:
           echo "$files" | xargs -r dprint fmt
         fi
       stage_fixed: true
+
+pre-push:
+  commands:
+    golangci-lint:
+      # プロジェクト全体に対してlintを実行
+      run: |
+        # 現在のディレクトリ内のすべてのGoファイルに対してlintを実行
+        golangci-lint run ./... --fix
+
+        # 修正があった場合は警告を表示
+        if [ -n "$(git diff)" ]; then
+          echo "警告: golangci-lintによって一部の問題が自動修正されました。"
+          echo "変更をコミットして再度pushしてください。"
+          exit 1
+        fi
