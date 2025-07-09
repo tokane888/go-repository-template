@@ -1,4 +1,11 @@
 {
+  "ignorePaths": [
+    // vscode拡張名, libの名前等固有名詞が多いファイルはspell check対象から除外
+    ".devcontainer/devcontainer.json",
+    ".devcontainer/Dockerfile",
+    ".golangci.yml",
+    "lefthook.yml"
+  ],
   "words": [
     "adpyke",
     "akamud",
