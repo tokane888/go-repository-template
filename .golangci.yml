@@ -5,13 +5,13 @@ run:
 
 linters:
   enable:
-    # エラーチェック系（必須）
+    # エラーチェック系
     - errcheck # エラーチェックの漏れを検出
     - errorlint # エラー処理のベストプラクティス
     - govet # コンパイルエラーや疑わしいコードを検出
     - staticcheck # 高度な静的解析
 
-    # コード品質系（重要）
+    # コード品質系
     - gocritic # コードの改善提案
     - gosec # セキュリティチェック
     - ineffassign # 無効な代入の検出
