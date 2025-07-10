@@ -25,7 +25,6 @@
     "vscode": {
       "extensions": [
         "adpyke.vscode-sql-formatter", // dprintのSQL正式対応までの暫定対応
-        "akamud.vscode-codemetrics",
         "dprint.dprint",
         "foxundermoon.shell-format",
         "github.vscode-github-actions",
