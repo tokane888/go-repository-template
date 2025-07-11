@@ -43,4 +43,5 @@ jobs:
         with:
           version: latest
           args: --config=.golangci.yml
-        continue-on-error: true
+        # linter導入直後は一度すべての指摘を潰すまでエラーにはしなくても良い
+        # continue-on-error: true
