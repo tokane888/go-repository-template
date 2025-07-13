@@ -6,7 +6,7 @@ import (
 
 	// TODO: import元調整
 	pkglogger "github.com/tokane888/go-repository-template/pkg/logger"
-	"github.com/tokane888/go-repository-template/services/api/configs"
+	"github.com/tokane888/go-repository-template/services/api/internal/config"
 	"go.uber.org/zap"
 )
 
@@ -14,7 +14,7 @@ import (
 var version = "dev"
 
 func main() {
-	cfg, err := configs.LoadConfig(version)
+	cfg, err := config.LoadConfig(version)
 	if err != nil {
 		log.Println("failed to load config:", err)
 		return
