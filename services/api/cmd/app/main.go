@@ -5,8 +5,8 @@ import (
 	"log"
 
 	// TODO: import元調整
-	"github.com/tokane888/go-repository-template/configs"
-	common "github.com/tokane888/go_common_module/v2"
+	pkglogger "github.com/tokane888/go-repository-template/pkg/logger"
+	"github.com/tokane888/go-repository-template/services/api/configs"
 	"go.uber.org/zap"
 )
 
@@ -19,7 +19,7 @@ func main() {
 		log.Println("failed to load config:", err)
 		return
 	}
-	logger, err := common.NewLogger(cfg.Logger)
+	logger, err := pkglogger.NewLogger(cfg.Logger)
 	if err != nil {
 		// zap loggerの初期化に失敗した場合のエラーハンドリング
 		// zapを使用できないため、標準のlogパッケージを使用

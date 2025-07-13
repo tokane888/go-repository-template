@@ -5,13 +5,13 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	common "github.com/tokane888/go_common_module/v2"
+	"github.com/tokane888/go-repository-template/pkg/logger"
 )
 
 // Config 環境変数を読み取り、各struct向けのConfigを保持
 type Config struct {
 	Env    string
-	Logger common.LoggerConfig
+	Logger logger.LoggerConfig
 	// 必要に応じてDatabaseConfig等各structへ注入する設定追加
 }
 
@@ -26,7 +26,7 @@ func LoadConfig(version string) (*Config, error) {
 
 	cfg := &Config{
 		Env: env,
-		Logger: common.LoggerConfig{
+		Logger: logger.LoggerConfig{
 			AppName:    getEnv("APP_NAME", ""),
 			AppVersion: version,
 			Level:      getEnv("LOG_LEVEL", "info"),

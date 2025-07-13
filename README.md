@@ -1,6 +1,23 @@
 # go-repository-template
 
-go関連のrepositoryを作成する際にtemplateとして使用
+Go モノレポ構成のテンプレートリポジトリ
+
+## ディレクトリ構成
+
+```sh
+.
+├── services/          # サービス群
+│   └── api/          # サンプル API サービス
+│       ├── cmd/
+│       ├── configs/
+│       ├── .env/
+│       └── go.mod
+├── pkg/              # 共通モジュール
+│   └── logger/       # ログ関連
+│       └── go.mod
+├── go.work.example   # Go Workspace 設定例
+└── README.md
+```
 
 ## 開発環境構築手順
 
@@ -10,14 +27,25 @@ go関連のrepositoryを作成する際にtemplateとして使用
 
 ## 設計方針
 
-- goによるbackend構築目的に使用
-- ディレクトリ構成は下記に従う
-  - [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従って作成
-- 設計はクリーンアーキに従う
+- ディレクトリ構成は[Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従う
+- Go モノレポによる複数サービス管理
+- 共通モジュールは `pkg/` ディレクトリに配置
+- 各サービスは独立した go.mod を持つ
+- replace ディレクティブでローカル参照
+- 設計はクリーンアーキテクチャに従う
 
 ## テンプレ使用時のTODO
 
 - devcontainerを使用しない場合
   - .devcontainer ディレクトリ削除
-- `cmd/app/`の`app`の部分をプロジェクトに応じて調整
+- `services/api/` を実際のサービス名に変更
+- 新しいサービス追加時は `services/` 配下に作成
 - リポジトリ内から"TODO: "を検索し、修正
+
+## サービス実行例
+
+```bash
+# API サービスの実行
+cd services/api
+go run ./cmd/app
+```
