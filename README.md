@@ -50,3 +50,9 @@ Go モノレポ構成のテンプレートリポジトリ
 cd services/api
 go run ./cmd/app
 ```
+
+## サービスデバッグ実行例
+
+- ctrl+shift+dで"RUN AND DEBUG"メニューを開く
+- 上のメニューからデバッグ実行したいserviceを選択
+- F5押下でデバッグ実行
