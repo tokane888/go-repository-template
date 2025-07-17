@@ -6,7 +6,7 @@ import (
 
 	// TODO: import元調整
 	pkglogger "github.com/tokane888/go-repository-template/pkg/logger"
-	"github.com/tokane888/go-repository-template/services/api/internal/config"
+	"github.com/tokane888/go-repository-template/services/batch/internal/config"
 	"go.uber.org/zap"
 )
 
@@ -29,7 +29,7 @@ func main() {
 	//nolint: errcheck
 	defer logger.Sync()
 
-	logger.Info("sample API info")
+	logger.Info("sample batch info")
 	logger.Info("additional field sample", zap.String("key", "value"))
 	logger.Warn("sample warn")
 	logger.Error("sample error")

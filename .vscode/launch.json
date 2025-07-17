@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug API Service",
+      "name": "🌐 API Service",
       "type": "go",
       "request": "launch",
       "mode": "auto",
@@ -13,6 +13,18 @@
       "cwd": "${workspaceFolder}/services/api",
       "env": {},
       "envFile": "${workspaceFolder}/services/api/.env/.env.local",
+      "args": [],
+      "showLog": false // デバッガの詳細ログ出力。通常時はfalseで良い
+    },
+    {
+      "name": "⚙️ Batch Service",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/services/batch/cmd/batch",
+      "cwd": "${workspaceFolder}/services/batch",
+      "env": {},
+      "envFile": "${workspaceFolder}/services/batch/.env/.env.local",
       "args": [],
       "showLog": false // デバッガの詳細ログ出力。通常時はfalseで良い
     }
