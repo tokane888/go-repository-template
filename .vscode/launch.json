@@ -1,0 +1,20 @@
+{
+  // IntelliSenseを使用してキー バインドの詳細情報を確認します
+  // 既存の属性については、ホバーして説明を表示します
+  // 詳細情報は、https://go.microsoft.com/fwlink/?linkid=830387 をご覧ください
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug API Service",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/services/api/cmd/api",
+      "cwd": "${workspaceFolder}/services/api",
+      "env": {},
+      "envFile": "${workspaceFolder}/services/api/.env/.env.local",
+      "args": [],
+      "showLog": false // デバッガの詳細ログ出力。通常時はfalseで良い
+    }
+  ]
+}
