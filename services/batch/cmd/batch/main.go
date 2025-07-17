@@ -19,13 +19,7 @@ func main() {
 		log.Println("failed to load config:", err)
 		return
 	}
-	logger, err := pkglogger.NewLogger(cfg.Logger)
-	if err != nil {
-		// zap loggerの初期化に失敗した場合のエラーハンドリング
-		// zapを使用できないため、標準のlogパッケージを使用
-		log.Println("failed to initialize logger:", err)
-		return
-	}
+	logger := pkglogger.NewLogger(cfg.Logger)
 	//nolint: errcheck
 	defer logger.Sync()
 
