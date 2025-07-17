@@ -17,7 +17,7 @@ type LoggerConfig struct {
 	AppVersion string // アプリのバージョン(cloudでのみログ出力)
 }
 
-func NewLogger(cfg LoggerConfig) (*zap.Logger, error) {
+func NewLogger(cfg LoggerConfig) *zap.Logger {
 	var zapCfg zap.Config
 	switch cfg.Format {
 	case "local":
@@ -49,12 +49,9 @@ func NewLogger(cfg LoggerConfig) (*zap.Logger, error) {
 
 	// error時のみStackTrace出力するよう設定
 	zapCfg.DisableStacktrace = true
-	logger, err := zapCfg.Build(
+	logger, _ := zapCfg.Build(
 		zap.AddStacktrace(zapcore.ErrorLevel),
 	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to build logger: %w", err)
-	}
 
 	// cloud向けはフィールド追加
 	if cfg.Format == "cloud" {
@@ -65,5 +62,5 @@ func NewLogger(cfg LoggerConfig) (*zap.Logger, error) {
 		)
 	}
 
-	return logger, nil
+	return logger
 }
