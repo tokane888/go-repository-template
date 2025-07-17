@@ -1,13 +1,14 @@
 package main
 
 import (
-	"errors"
+	"fmt"
 	"log"
+	"net/http"
 
 	// TODO: import元調整
+	"github.com/gin-gonic/gin"
 	pkglogger "github.com/tokane888/go-repository-template/pkg/logger"
 	"github.com/tokane888/go-repository-template/services/api/internal/config"
-	"go.uber.org/zap"
 )
 
 // アプリのversion。デフォルトは開発版。cloud上ではbuild時に-ldflagsフラグ経由でバージョンを埋め込む
@@ -16,8 +17,7 @@ var version = "dev"
 func main() {
 	cfg, err := config.LoadConfig(version)
 	if err != nil {
-		log.Println("failed to load config:", err)
-		return
+		log.Fatalf("failed to load config: %v", err)
 	}
 	logger, err := pkglogger.NewLogger(cfg.Logger)
 	if err != nil {
@@ -29,10 +29,11 @@ func main() {
 	//nolint: errcheck
 	defer logger.Sync()
 
-	logger.Info("sample API info")
-	logger.Info("additional field sample", zap.String("key", "value"))
-	logger.Warn("sample warn")
-	logger.Error("sample error")
-	err = errors.New("errorのサンプル")
-	logger.Error("DB Connection failed", zap.Error(err))
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run(fmt.Sprintf(":%d", cfg.RouterConfig.Port))
 }

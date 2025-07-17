@@ -3,15 +3,18 @@ package config
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 	"github.com/tokane888/go-repository-template/pkg/logger"
+	"github.com/tokane888/go-repository-template/services/api/internal/router"
 )
 
 // Config 環境変数を読み取り、各struct向けのConfigを保持
 type Config struct {
-	Env    string
-	Logger logger.LoggerConfig
+	Env          string
+	RouterConfig router.RouterConfig
+	Logger       logger.LoggerConfig
 	// 必要に応じてDatabaseConfig等各structへ注入する設定追加
 }
 
@@ -24,8 +27,16 @@ func LoadConfig(version string) (*Config, error) {
 		return nil, fmt.Errorf("failed to load %s: %w", envFile, err)
 	}
 
+	port, err := getIntEnv("API_PORT", 8080)
+	if err != nil {
+		return nil, err
+	}
+
 	cfg := &Config{
 		Env: env,
+		RouterConfig: router.RouterConfig{
+			Port: port,
+		},
 		Logger: logger.LoggerConfig{
 			AppName:    getEnv("APP_NAME", ""),
 			AppVersion: version,
@@ -41,4 +52,15 @@ func getEnv(key, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+func getIntEnv(key string, fallback int) (int, error) {
+	if s, exists := os.LookupEnv(key); exists {
+		i, err := strconv.Atoi(s)
+		if err != nil {
+			return 0, fmt.Errorf("invalid value for environment variable %s: %q (expected integer): %w", key, s, err)
+		}
+		return i, nil
+	}
+	return fallback, nil
 }
