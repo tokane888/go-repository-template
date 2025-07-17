@@ -42,6 +42,7 @@ Go モノレポ構成のテンプレートリポジトリ
 - 新しいサービス追加時は `services/` 配下に作成
 - リポジトリ内から"TODO: "を検索し、修正
 - CLAUDE.mdは適宜調整
+- services配下の不要なservice, README.mdは適宜削除
 
 ## サービス実行例
 
