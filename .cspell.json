@@ -11,6 +11,7 @@
     "azuretools",
     "devcontainers",
     "foxundermoon",
+    "gonic",
     "godotenv",
     "gofumpt",
     "golangci",
