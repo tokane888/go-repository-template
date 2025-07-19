@@ -99,8 +99,8 @@ jobs:
           version: latest
           args: --config=${{ github.workspace }}/.golangci.yml
           working-directory: ${{ matrix.module }}
-        # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
-        # continue-on-error: true
+          # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
+          # continue-on-error: true
 
   yaml-lint:
     name: YAML Lint
