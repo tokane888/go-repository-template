@@ -50,7 +50,7 @@ jobs:
           # assignee_trigger: "claude-bot"
 
           # Optional: Allow Claude to run specific commands
-          allowed_tools: "Bash(*)"
+          # allowed_tools: "Bash(*)"
           # allowed_tools: |
           #   Bash(find: *),
           #   Bash(git: *),
@@ -66,6 +66,7 @@ jobs:
           #   Bash(mv: *),
           #   Bash(touch: *),
           #   Bash(rmdir: *),
+          allowed_tools: "Bash(find: *), Bash(git: *), Bash(gh issue: *), Bash(gh pr: *), Bash(golangci-lint: *), Bash(head: *), Bash(ls: *), Bash(pwd: *), Bash(tail: *), Bash(go: *), Bash(mkdir: *), Bash(mv: *), Bash(touch: *), Bash(rmdir: *)"
 
           # Optional: Add custom instructions for Claude to customize its behavior for your project
           # custom_instructions: |
