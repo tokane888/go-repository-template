@@ -22,6 +22,7 @@ func main() {
 	//nolint: errcheck
 	defer logger.Sync()
 
+	logger.Info("Hello World from Claude Code!")
 	logger.Info("sample batch info")
 	logger.Info("additional field sample", zap.String("key", "value"))
 	logger.Warn("sample warn")
