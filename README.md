@@ -15,7 +15,6 @@ Go モノレポ構成のテンプレートリポジトリ
 ├── pkg/              # 共通モジュール
 │   └── logger/       # ログ関連
 │       └── go.mod
-├── go.work.example   # Go Workspace 設定例
 └── README.md
 ```
 
