@@ -26,6 +26,7 @@
     "multierr",
     "nolint",
     "pkglogger",
+    "reviewdog",
     "shellcheck",
     "testutil",
     "timonwong",
