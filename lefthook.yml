@@ -9,6 +9,14 @@ pre-commit:
         fi
       stage_fixed: true
 
+    yaml-lint:
+      run: |
+        files=$(echo "{staged_files}" | grep -E '\.(yml|yaml)$' || true)
+        if [ -n "$files" ]; then
+          echo "$files" # lint対象のファイル名出力
+          echo "$files" | xargs -I {} yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}" {}
+        fi
+
 pre-push:
   commands:
     golangci-lint:
