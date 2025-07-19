@@ -14,11 +14,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Find all Go modules
         id: find
         run: |
-          # Enable debug mode to output log
+          # -xオプションを指定しないとshell実行ログが出力されないため指定
           set -x
           # Find all modules
           all_modules=$(find ./services ./pkg -name "go.mod" | xargs dirname | sed 's|^\./||' | sort)
@@ -51,6 +53,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -75,6 +79,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -91,5 +97,5 @@ jobs:
           version: latest
           args: --config=${{ github.workspace }}/.golangci.yml
           working-directory: ${{ matrix.module }}
-        # linter導入直後は一度すべての指摘を潰すまでエラーにはしなくても良い
+        # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
         # continue-on-error: true
