@@ -1,3 +1,4 @@
+---
 pre-commit:
   commands:
     dprint-fmt:
@@ -14,7 +15,7 @@ pre-commit:
         files=$(echo "{staged_files}" | grep -E '\.(yml|yaml)$' || true)
         if [ -n "$files" ]; then
           echo "$files" # lint対象のファイル名出力
-          echo "$files" | xargs -I {} yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}" {}
+          echo "$files" | tr ' ' '\n' | xargs -I {} yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}" {}
         fi
 
 pre-push:
