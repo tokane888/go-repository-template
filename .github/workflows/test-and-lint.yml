@@ -117,11 +117,10 @@ jobs:
 
       - name: Run yamllint
         run: |
-          yamllint -c "{extends: default, rules: {line-length: disable, truthy: disable}}" \
+          yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}" \
             .github/workflows/*.yml \
             *.yml \
-            *.yaml \
-            2>&1 || true
+            *.yaml
 
       - name: Run actionlint
         uses: reviewdog/action-actionlint@v1
