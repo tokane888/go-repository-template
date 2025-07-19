@@ -99,3 +99,30 @@ jobs:
           working-directory: ${{ matrix.module }}
         # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
         # continue-on-error: true
+
+  yaml-lint:
+    name: YAML Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install yamllint
+        run: |
+          pip install --user yamllint
+
+      - name: Run yamllint
+        run: |
+          yamllint -c "{extends: default, rules: {line-length: disable, truthy: disable}}" \
+            .github/workflows/*.yml \
+            *.yml \
+            *.yaml \
+            2>&1 || true
+
+      - name: Run actionlint
+        uses: reviewdog/action-actionlint@v1
+        with:
+          fail_level: warning
+          reporter: github-pr-review
