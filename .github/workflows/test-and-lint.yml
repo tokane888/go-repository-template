@@ -9,7 +9,8 @@ jobs:
     name: Find Go Modules
     runs-on: ubuntu-latest
     outputs:
-      modules: ${{ steps.find.outputs.modules }}
+      all-modules: ${{ steps.find.outputs.all-modules }}
+      test-modules: ${{ steps.find.outputs.test-modules }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,9 +18,26 @@ jobs:
       - name: Find all Go modules
         id: find
         run: |
-          modules=$(find . -name "go.mod" -not -path "./.git/*" | xargs dirname | sed 's|^\./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
-          echo "Found modules: $modules"
-          echo "modules=$modules" >> $GITHUB_OUTPUT
+          # Find all modules
+          all_modules=$(find . -name "go.mod" -not -path "./.git/*" | xargs dirname | sed 's|^\./||' | sort)
+
+          # Find modules with test files
+          test_modules=""
+          for module in $all_modules; do
+            if test -n "$(find "$module" -name "*_test.go" -type f -print -quit)"; then
+              test_modules="$test_modules$module\n"
+            fi
+          done
+
+          # Convert to JSON arrays
+          all_modules_json=$(echo "$all_modules" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          test_modules_json=$(echo -e "$test_modules" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+
+          echo "All modules: $all_modules_json"
+          echo "Test modules: $test_modules_json"
+
+          echo "all-modules=$all_modules_json" >> $GITHUB_OUTPUT
+          echo "test-modules=$test_modules_json" >> $GITHUB_OUTPUT
 
   test:
     name: Test (${{ matrix.module }})
@@ -27,7 +45,7 @@ jobs:
     needs: find-modules
     strategy:
       matrix:
-        module: ${{ fromJson(needs.find-modules.outputs.modules) }}
+        module: ${{ fromJson(needs.find-modules.outputs.test-modules) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -51,7 +69,7 @@ jobs:
     needs: find-modules
     strategy:
       matrix:
-        module: ${{ fromJson(needs.find-modules.outputs.modules) }}
+        module: ${{ fromJson(needs.find-modules.outputs.all-modules) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
