@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	pkglogger "github.com/tokane888/go-repository-template/pkg/logger"
 	"github.com/tokane888/go-repository-template/services/api/internal/config"
+	"go.uber.org/zap"
 )
 
 // アプリのversion。デフォルトは開発版。cloud上ではbuild時に-ldflagsフラグ経由でバージョンを埋め込む
@@ -29,5 +30,9 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.Run(fmt.Sprintf(":%d", cfg.RouterConfig.Port))
+	err = r.Run(fmt.Sprintf(":%d", cfg.RouterConfig.Port))
+	if err != nil {
+		logger.Error("failed to start API server", zap.Error(err))
+		return
+	}
 }
