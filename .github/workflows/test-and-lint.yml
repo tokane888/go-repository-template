@@ -51,7 +51,7 @@ jobs:
         uses: golangci/golangci-lint-action@v8
         with:
           version: latest
-          args: --config=../../.golangci.yml
+          args: --config=${{ github.workspace }}/.golangci.yml
           working-directory: ${{ matrix.module }}
         # linter導入直後は一度すべての指摘を潰すまでエラーにはしなくても良い
         # continue-on-error: true
