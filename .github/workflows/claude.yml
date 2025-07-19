@@ -63,6 +63,7 @@ jobs:
             Bash(gh pr: *),
             Bash(golangci-lint: *),
             Bash(ls: *),
+            Bash(pwd: *),
             Bash(go: *),
             Bash(mkdir: *),
             Bash(mv: *),
