@@ -1,0 +1,92 @@
+name: 🐛 バグレポート
+description: Goバックエンドサービスで発生したバグを報告
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## バグレポート
+        
+        Goバックエンドサービスで発生したバグの詳細を記載してください。
+        
+  - type: dropdown
+    id: service
+    attributes:
+      label: 影響を受けるサービス
+      description: バグが発生しているサービスを選択してください
+      options:
+        - api
+        - batch
+        - pkg/logger
+        - その他
+    validations:
+      required: true
+      
+  - type: textarea
+    id: description
+    attributes:
+      label: バグの説明
+      description: 何が起きているかを簡潔に説明してください
+      placeholder: "例：APIリクエスト時に500エラーが発生する"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: バグを再現するための手順を記載してください
+      placeholder: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+      
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+      description: 本来どのような動作をするべきかを記載してください
+    validations:
+      required: true
+      
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+      description: 実際に何が起きているかを記載してください
+    validations:
+      required: true
+      
+  - type: textarea
+    id: environment
+    attributes:
+      label: 環境情報
+      description: 関連する環境情報を記載してください
+      placeholder: |
+        - OS: 
+        - Go version: 
+        - Docker version: 
+        - その他の関連する依存関係:
+    validations:
+      required: true
+      
+  - type: textarea
+    id: logs
+    attributes:
+      label: ログ・エラーメッセージ
+      description: 関連するログやエラーメッセージがあれば記載してください
+      render: shell
+      
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: チェックリスト
+      description: 以下の項目を確認してください
+      options:
+        - label: 既存のissueに同様の報告がないことを確認した
+          required: true
+        - label: ログレベルをDEBUGに設定して詳細なログを確認した
+        - label: 可能であれば単体テストで再現を試みた

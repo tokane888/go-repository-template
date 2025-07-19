@@ -1,0 +1,101 @@
+name: ❓ 質問・議論
+description: 技術的な質問や設計に関する議論
+title: "[QUESTION] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 質問・議論
+        
+        技術的な質問や設計に関する議論を投稿してください。
+        
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      description: 質問の種類を選択してください
+      options:
+        - アーキテクチャ設計
+        - パフォーマンス
+        - セキュリティ
+        - 開発手法・ベストプラクティス
+        - ライブラリ・依存関係
+        - デプロイ・インフラ
+        - テスト戦略
+        - その他
+    validations:
+      required: true
+      
+  - type: dropdown
+    id: service
+    attributes:
+      label: 関連サービス
+      description: 質問に関連するサービスを選択してください
+      options:
+        - api
+        - batch  
+        - pkg/logger
+        - 全体アーキテクチャ
+        - 開発環境・ツール
+        - 特定のサービスに関係しない
+    validations:
+      required: true
+      
+  - type: textarea
+    id: question
+    attributes:
+      label: 質問内容
+      description: 具体的な質問を記載してください
+      placeholder: "例：マイクロサービス間の通信にはgRPCとRESTのどちらが適しているでしょうか？"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: context
+    attributes:
+      label: 背景・文脈
+      description: 質問の背景や関連する状況を記載してください
+      placeholder: |
+        - 現在の状況:
+        - 解決したい課題:
+        - 制約条件:
+        
+  - type: textarea
+    id: research
+    attributes:
+      label: 既に調査した内容
+      description: 既に調べたことや試したことがあれば記載してください
+      placeholder: |
+        - 参考にしたドキュメント:
+        - 試した方法:
+        - 分からなかった点:
+        
+  - type: textarea
+    id: requirements
+    attributes:
+      label: 制約・要件
+      description: 技術的制約や要件があれば記載してください
+      placeholder: |
+        - パフォーマンス要件:
+        - セキュリティ要件:
+        - 運用要件:
+        - その他の制約:
+        
+  - type: textarea
+    id: examples
+    attributes:
+      label: 具体例・コード（あれば）
+      description: 関連するコードや設定例があれば記載してください
+      render: go
+      
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: チェックリスト
+      description: 以下の項目を確認してください
+      options:
+        - label: 既存のissueやドキュメントで回答がないかを確認した
+          required: true
+        - label: 質問の内容が明確で、他の人が理解しやすいように記載した
+          required: true
