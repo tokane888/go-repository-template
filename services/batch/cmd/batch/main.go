@@ -16,8 +16,7 @@ var version = "dev"
 func main() {
 	cfg, err := config.LoadConfig(version)
 	if err != nil {
-		log.Println("failed to load config:", err)
-		return
+		log.Fatal("failed to load config: ", err)
 	}
 	logger := pkglogger.NewLogger(cfg.Logger)
 	//nolint: errcheck
