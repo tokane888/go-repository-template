@@ -117,10 +117,8 @@ jobs:
 
       - name: Run yamllint
         run: |
-          yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}" \
-            .github/workflows/*.yml \
-            *.yml \
-            *.yaml
+          # Find and lint existing YAML files
+          find . -name "*.yml" -o -name "*.yaml" | xargs -r yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}"
 
       - name: Run actionlint
         uses: reviewdog/action-actionlint@v1
