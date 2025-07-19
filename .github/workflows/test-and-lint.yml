@@ -5,12 +5,29 @@ on:
   pull_request:
 
 jobs:
+  find-modules:
+    name: Find Go Modules
+    runs-on: ubuntu-latest
+    outputs:
+      modules: ${{ steps.find.outputs.modules }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Find all Go modules
+        id: find
+        run: |
+          modules=$(find . -name "go.mod" -not -path "./.git/*" | xargs dirname | sed 's|^\./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "Found modules: $modules"
+          echo "modules=$modules" >> $GITHUB_OUTPUT
+
   test:
     name: Test (${{ matrix.module }})
     runs-on: ubuntu-latest
+    needs: find-modules
     strategy:
       matrix:
-        module: [services/api, services/batch]
+        module: ${{ fromJson(needs.find-modules.outputs.modules) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,9 +48,10 @@ jobs:
   lint:
     name: Lint (${{ matrix.module }})
     runs-on: ubuntu-latest
+    needs: find-modules
     strategy:
       matrix:
-        module: [services/api, services/batch, pkg/logger]
+        module: ${{ fromJson(needs.find-modules.outputs.modules) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
