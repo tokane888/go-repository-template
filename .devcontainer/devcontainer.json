@@ -30,6 +30,7 @@
         "github.vscode-github-actions",
         "golang.go@prerelease",
         "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
         "streetsidesoftware.code-spell-checker",
         "timonwong.shellcheck",
         "yzhang.markdown-all-in-one",
@@ -71,6 +72,12 @@
         "[sql]": {
           // dprintのSQL正式対応までの暫定対応
           "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml",
+          "yaml.schemas": {
+            "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
+          }
         }
       }
     }
