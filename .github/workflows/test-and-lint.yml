@@ -20,7 +20,7 @@ jobs:
       - name: Find all Go modules
         id: find
         run: |
-          # Enable debug mode to output log
+          # -xオプションを指定しないとshell実行ログが出力されないため指定
           set -x
           # Find all modules
           all_modules=$(find ./services ./pkg -name "go.mod" | xargs dirname | sed 's|^\./||' | sort)
