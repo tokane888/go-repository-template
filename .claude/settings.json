@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "Bash(apt list:*)",
       "Bash(find:*)",
       "Bash(golangci-lint run:*)",
       "Bash(ls:*)",
@@ -15,12 +16,13 @@
       "Bash(git commit:*)",
       "Bash(git pull:*)",
       "Bash(git push:*)",
+      "Bash(npm list:*)",
       "Bash(pwd:*)",
-      "WebFetch(*)",
       "Bash(go:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "Bash(rmdir:*)"
+      "Bash(rmdir:*)",
+      "WebFetch(*)"
     ],
     "deny": [
       "Bash(git push origin --delete:*)",
