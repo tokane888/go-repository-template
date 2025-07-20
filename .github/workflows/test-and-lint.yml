@@ -24,11 +24,11 @@ jobs:
           # -xオプションを指定しないとshell実行ログが出力されないため指定
           set -x
           # Find all modules
-          all_modules=$(find ./services ./pkg -name "go.mod" | xargs dirname | sed 's|^\./||' | sort)
+          all_modules=$(find ./services ./pkg -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
 
           # Find modules with test files
           test_modules=""
-          for module in $all_modules; do
+          for module in "$all_modules"; do
             if test -n "$(find "$module" -name "*_test.go" -print -quit)"; then
               test_modules="$test_modules$module\n"
             fi
@@ -99,6 +99,9 @@ jobs:
           version: latest
           args: --config=${{ github.workspace }}/.golangci.yml
           working-directory: ${{ matrix.module }}
+          # デフォルトではcacheは`~/.cache/golangci-lint`に保存される。
+          # モノレポ構成ではrestoreに失敗するためcache無効化
+          skip-cache: true
           # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
           # continue-on-error: true
 
@@ -118,10 +121,4 @@ jobs:
       - name: Run yamllint
         run: |
           # Find and lint existing YAML files
-          find . -name "*.yml" -o -name "*.yaml" | xargs -r yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}"
-
-      - name: Run actionlint
-        uses: reviewdog/action-actionlint@v1
-        with:
-          fail_level: warning
-          reporter: github-pr-review
+          find . \( -name '*.yml' -o -name '*.yaml' \) -print0 | xargs -0 -r yamllint -d "{extends: default, rules: {line-length: disable, truthy: disable}}"

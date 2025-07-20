@@ -8,6 +8,14 @@
 version: 2
 updates:
   - package-ecosystem: "gomod"
-    directory: "/"
+    directory: "/services/api"
+    schedule:
+      interval: monthly
+  - package-ecosystem: "gomod"
+    directory: "/services/batch"
+    schedule:
+      interval: monthly
+  - package-ecosystem: "gomod"
+    directory: "/pkg/logger"
     schedule:
       interval: monthly
