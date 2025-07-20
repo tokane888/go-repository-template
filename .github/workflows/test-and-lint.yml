@@ -108,6 +108,11 @@ jobs:
   yaml-lint:
     name: YAML Lint
     runs-on: ubuntu-latest
+    # actionlintがPRに対してコメントをするためにpermission付与
+    permissions:
+      contents: read
+      pull-requests: write
+      checks: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
