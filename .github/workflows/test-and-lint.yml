@@ -28,7 +28,7 @@ jobs:
 
           # Find modules with test files
           test_modules=""
-          for module in $all_modules; do
+          for module in "$all_modules"; do
             if test -n "$(find "$module" -name "*_test.go" -print -quit)"; then
               test_modules="$test_modules$module\n"
             fi
