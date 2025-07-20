@@ -41,7 +41,7 @@ Go モノレポ構成のテンプレートリポジトリ
 - 新しいサービス追加時は `services/` 配下に作成
 - リポジトリ内から"TODO: "を検索し、修正
 - リポジトリ内から"go-repository-template"を検索し、修正
-- CLAUDE.mdは適宜調整
+- CLAUDE.mdは削除の上claude内で`/init`で再生成して調整
 - claude_codeを使用しない場合は下記で関連ファイルを探索して削除
   - `find . -name '*claude*' -not -path './.git/*'`
 - services配下の不要なservice, README.mdは適宜削除
