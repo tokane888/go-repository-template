@@ -130,6 +130,8 @@ jobs:
 
       - name: Run actionlint
         uses: reviewdog/action-actionlint@v1
+        # reviewdogはPR作成時にしか機能しないためif文追加
+        if: github.event_name == 'pull_request'
         with:
           fail_level: warning
           reporter: github-pr-review
