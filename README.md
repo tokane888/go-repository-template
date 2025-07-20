@@ -40,6 +40,7 @@ Go モノレポ構成のテンプレートリポジトリ
 - `services/api/` を実際のサービス名に変更
 - 新しいサービス追加時は `services/` 配下に作成
 - リポジトリ内から"TODO: "を検索し、修正
+- リポジトリ内から"go-repository-template"を検索し、修正
 - CLAUDE.mdは適宜調整
 - claude_codeを使用しない場合は下記で関連ファイルを探索して削除
   - `find . -name '*claude*' -not -path './.git/*'`
