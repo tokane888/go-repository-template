@@ -4,6 +4,8 @@
     ".devcontainer/devcontainer.json",
     ".devcontainer/Dockerfile",
     ".golangci.yml",
+    "go.mod",
+    "go.sum",
     "lefthook.yml"
   ],
   "words": [
