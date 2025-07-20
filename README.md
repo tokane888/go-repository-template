@@ -28,9 +28,9 @@ Go モノレポ構成のテンプレートリポジトリ
 
 - ディレクトリ構成は[Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従う
 - Go モノレポによる複数サービス管理
-- 共通モジュールは `pkg/` ディレクトリに配置
 - 各サービスは独立した go.mod を持つ
-- replace ディレクティブでローカル参照
+- 共通モジュールは `pkg/` ディレクトリに配置
+  - replace ディレクティブでローカル参照
 - 設計はクリーンアーキテクチャに従う
 
 ## テンプレ使用時のTODO
