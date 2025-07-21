@@ -91,8 +91,7 @@
 
     // TODO: claude codeの使用が許可されない場合は削除
     "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached",
-    "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached",
-    "source=/usr/bin/notify-send,target=/usr/bin/notify-send,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached"
   ],
   "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
 
