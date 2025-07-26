@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-type LoggerConfig struct {
+type Config struct {
 	Level      string // debug, info, warn, error
 	Format     string // local(見やすさ重視), cloud(CloudWatch等で解析可能であることを重視)
 	Env        string // 環境名(cloudでのみログ出力)
@@ -17,7 +17,7 @@ type LoggerConfig struct {
 	AppVersion string // アプリのバージョン(cloudでのみログ出力)
 }
 
-func NewLogger(cfg LoggerConfig) *zap.Logger {
+func NewLogger(cfg Config) *zap.Logger {
 	var zapCfg zap.Config
 	switch cfg.Format {
 	case "local":

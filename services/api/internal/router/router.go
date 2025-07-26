@@ -1,5 +1,7 @@
 package router
 
-type RouterConfig struct {
+type Config struct {
 	Port int
 }
+
+// TODO: router実装

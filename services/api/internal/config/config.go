@@ -13,8 +13,8 @@ import (
 // Config 環境変数を読み取り、各struct向けのConfigを保持
 type Config struct {
 	Env          string
-	RouterConfig router.RouterConfig
-	Logger       logger.LoggerConfig
+	RouterConfig router.Config
+	Logger       logger.Config
 	// 必要に応じてDatabaseConfig等各structへ注入する設定追加
 }
 
@@ -34,10 +34,10 @@ func LoadConfig(version string) (*Config, error) {
 
 	cfg := &Config{
 		Env: env,
-		RouterConfig: router.RouterConfig{
+		RouterConfig: router.Config{
 			Port: port,
 		},
-		Logger: logger.LoggerConfig{
+		Logger: logger.Config{
 			AppName:    getEnv("APP_NAME", ""),
 			AppVersion: version,
 			Level:      getEnv("LOG_LEVEL", "info"),
