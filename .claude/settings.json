@@ -26,7 +26,6 @@
       "Bash(mv:*)",
       "Bash(rmdir:*)",
       "Bash(xargs:*)",
-      "Bash(yamllint:*)",
       "WebFetch(*)"
     ],
     "deny": [
