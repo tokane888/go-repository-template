@@ -2,9 +2,9 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
   "name": "Go",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
     // TODO: claude code拡張。許可されない環境では除去
     "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {},
