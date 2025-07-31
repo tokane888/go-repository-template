@@ -21,6 +21,7 @@
       "Bash(ls:*)",
       "Bash(npm list:*)",
       "Bash(pwd:*)",
+      "Bash(touch:*)",
       "Bash(go:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
