@@ -11,7 +11,7 @@ import (
 // Config 環境変数を読み取り、各struct向けのConfigを保持
 type Config struct {
 	Env    string
-	Logger logger.LoggerConfig
+	Logger logger.Config
 	// 必要に応じてDatabaseConfig等各structへ注入する設定追加
 }
 
@@ -26,7 +26,7 @@ func LoadConfig(version string) (*Config, error) {
 
 	cfg := &Config{
 		Env: env,
-		Logger: logger.LoggerConfig{
+		Logger: logger.Config{
 			AppName:    getEnv("APP_NAME", ""),
 			AppVersion: version,
 			Level:      getEnv("LOG_LEVEL", "info"),
