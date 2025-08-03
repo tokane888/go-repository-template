@@ -62,7 +62,7 @@ go run ./cmd/app
 
 ## local環境向けの各種コマンド例
 
-- 開発用postgres DBログイン方法
+- 開発用postgres DBログイン
   - `docker exec -it go-repository-template_devcontainer-postgres-1 psql -U postgres -d api_db`
 - user一覧取得
   - `curl http://localhost:8080/api/v1/users -H 'x-api-key: dummy'`
