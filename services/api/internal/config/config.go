@@ -7,15 +7,17 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/tokane888/go-repository-template/pkg/logger"
+	"github.com/tokane888/go-repository-template/services/api/internal/db"
 	"github.com/tokane888/go-repository-template/services/api/internal/router"
 )
 
 // Config 環境変数を読み取り、各struct向けのConfigを保持
 type Config struct {
-	Env          string
-	RouterConfig router.Config
-	Logger       logger.Config
-	// 必要に応じてDatabaseConfig等各structへ注入する設定追加
+	Env             string
+	RouterConfig    router.Config
+	DatabaseConfig  db.Config
+	Logger          logger.Config
+	ShutdownTimeout int // graceful shutdown timeout in seconds
 }
 
 // LoadConfig loads environment variables into Config
@@ -31,11 +33,27 @@ func LoadConfig(version string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	dbPort, err := getIntEnv("DB_PORT", 5432)
+	if err != nil {
+		return nil, err
+	}
+	shutdownTimeout, err := getIntEnv("SHUTDOWN_TIMEOUT", 5)
+	if err != nil {
+		return nil, err
+	}
 
 	cfg := &Config{
 		Env: env,
 		RouterConfig: router.Config{
 			Port: port,
+		},
+		DatabaseConfig: db.Config{
+			Host:     getEnv("DB_HOST", "localhost"),
+			Port:     dbPort,
+			User:     getEnv("DB_USER", "postgres"),
+			Password: getEnv("DB_PASSWORD", "postgres"),
+			DBName:   getEnv("DB_NAME", "api_db"),
+			SSLMode:  getEnv("DB_SSLMODE", "disable"),
 		},
 		Logger: logger.Config{
 			AppName:    getEnv("APP_NAME", ""),
@@ -43,6 +61,7 @@ func LoadConfig(version string) (*Config, error) {
 			Level:      getEnv("LOG_LEVEL", "info"),
 			Format:     getEnv("LOG_FORMAT", "local"),
 		},
+		ShutdownTimeout: shutdownTimeout,
 	}
 	return cfg, nil
 }

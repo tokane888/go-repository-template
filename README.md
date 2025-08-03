@@ -59,3 +59,14 @@ go run ./cmd/app
 - ctrl+shift+dで"RUN AND DEBUG"メニューを開く
 - 上のメニューからデバッグ実行したいserviceを選択
 - F5押下でデバッグ実行
+
+## local環境向けの各種コマンド例
+
+- 開発用postgres DBログイン方法
+  - `docker exec -it go-repository-template_devcontainer-postgres-1 psql -U postgres -d api_db`
+- user一覧取得
+  - `curl http://localhost:8080/api/v1/users -H 'x-api-key: dummy'`
+- user登録
+  - `curl -X POST http://localhost:8080/api/v1/users -H 'x-api-key: dummy' -d '{"email": "hoge@test.com", "username": "test_user", "password": "test_password_123"}'`
+- user削除
+  - `curl -X DELETE http://localhost:8080/api/v1/users/e5fa7ced-3a09-479b-a6f1-0c24cadbebe3 -H 'x-api-key: dummy'`

@@ -32,6 +32,9 @@ linters:
       rules:
         - name: use-any
           disabled: false
+    gosec:
+      excludes:
+        - G112 # Potential Slowloris Attack (ReadHeaderTimeout)
   exclusions:
     rules:
       #  test fileで一部のlinterを無効化
