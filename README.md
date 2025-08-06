@@ -42,9 +42,12 @@ Go モノレポ構成のテンプレートリポジトリ
 - リポジトリ内から"TODO: "を検索し、修正
 - リポジトリ内から"go-repository-template"を検索し、修正
 - CLAUDE.mdは削除の上claude内で`/init`で再生成して調整
-- claude_codeを使用しない場合は下記で関連ファイルを探索して削除
+- claude codeを使用しない場合は下記で関連ファイルを探索して削除
   - `find . -name '*claude*' -not -path './.git/*'`
 - services配下の不要なservice, README.mdは適宜削除
+- claude codeによるレビューを可能にする場合、`claude`コマンド実行後、下記でgithub appをインストール
+  - `/install-github-app`
+    - 詳細は[公式](https://docs.anthropic.com/en/docs/claude-code/github-actions)参照
 
 ## サービス実行例
 
