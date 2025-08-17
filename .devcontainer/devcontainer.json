@@ -33,9 +33,7 @@
         "redhat.vscode-yaml",
         "streetsidesoftware.code-spell-checker",
         "timonwong.shellcheck",
-        "yzhang.markdown-all-in-one",
-        // TODO: Cline。許可されない環境では削除
-        "saoudrizwan.claude-dev"
+        "yzhang.markdown-all-in-one"
       ],
       "settings": {
         "editor.formatOnSave": true,
