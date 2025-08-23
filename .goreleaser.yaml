@@ -115,16 +115,5 @@ release:
 
   footer: |
     ---
-    ### Verification
-
-    ```bash
-    # Verify API version
-    ./api --version
-
-    # Verify Batch version
-    ./batch --version
-    ```
-
-    ---
 
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
