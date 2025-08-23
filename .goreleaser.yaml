@@ -57,23 +57,27 @@ builds:
 archives:
   # API Service archive
   - id: api-archive
+    ids:
+      - api
     name_template: >-
-      {{ if eq .Binary "api" }}api{{ end }}_
+      api_
       {{- .Version }}_
       {{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
-      {{- else }}{{ .Arch }}{{ end }}.tar.gz
+      {{- else }}{{ .Arch }}{{ end }}
     files:
       - none* # Only include the binary
 
   # Batch Service archive
   - id: batch-archive
+    ids:
+      - batch
     name_template: >-
-      {{ if eq .Binary "batch" }}batch{{ end }}_
+      batch_
       {{- .Version }}_
       {{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
-      {{- else }}{{ .Arch }}{{ end }}.tar.gz
+      {{- else }}{{ .Arch }}{{ end }}
     files:
       - none* # Only include the binary
 
