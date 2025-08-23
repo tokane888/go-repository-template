@@ -97,7 +97,7 @@ release:
     owner: tokane888
     name: go-repository-template
   prerelease: auto
-  mode: replace
+  mode: append
   header: |
     ## {{.ProjectName}} {{.Tag}} ({{.Date}})
 
