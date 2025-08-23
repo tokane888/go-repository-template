@@ -30,7 +30,11 @@ fi
 # serenaが存在しない場合のみ追加
 if ! claude mcp list 2>/dev/null | grep -q "serena"; then
     echo "Adding MCP server serena..."
-    claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project "$(pwd)" --enable-web-dashboard false --enable-gui-log-window false
+    claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server \
+        --context ide-assistant \
+        --project "$(pwd)" \
+        --enable-web-dashboard false \
+        --enable-gui-log-window false
 else
     echo "MCP server serena already exists, skipping..."
 fi
