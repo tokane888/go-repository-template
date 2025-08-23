@@ -105,7 +105,7 @@ release:
   header: |
     ## {{.ProjectName}} {{.Tag}} ({{.Date}})
 
-    Unified release for all services in the monorepo.
+    (適宜リリース内容記載)
 
   footer: |
     ---
