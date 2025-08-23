@@ -81,9 +81,6 @@ checksum:
   name_template: "checksums.txt"
   algorithm: sha256
 
-snapshot:
-  version_template: "{{ incpatch .Version }}-next"
-
 changelog:
   sort: desc # 新しい順にコミットを一覧表示
   use: github
