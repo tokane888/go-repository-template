@@ -96,7 +96,6 @@ release:
   github:
     owner: tokane888
     name: go-repository-template
-  draft: false
   prerelease: auto
   mode: replace
   header: |
