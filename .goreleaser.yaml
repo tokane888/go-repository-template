@@ -57,9 +57,6 @@ builds:
 archives:
   # API Service archive
   - id: api-archive
-    builds_info:
-      group: root
-      owner: root
     name_template: >-
       {{ if eq .Binary "api" }}api{{ end }}_
       {{- .Version }}_
@@ -71,9 +68,6 @@ archives:
 
   # Batch Service archive
   - id: batch-archive
-    builds_info:
-      group: root
-      owner: root
     name_template: >-
       {{ if eq .Binary "batch" }}batch{{ end }}_
       {{- .Version }}_
