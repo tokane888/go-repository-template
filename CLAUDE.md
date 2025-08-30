@@ -132,14 +132,18 @@ DevContainerが提供するもの：
 - Git設定
 - Claude CodeとGitHub Copilotのサポート
 
-## ソース編集時注意点
+## ソース編集時の注意点
 
-- 対応するソース残っている状態で日本語のコメントのみを消去しない
-- ファイルを一通り編集した後、下記のようにgofumptで整形
-  - `gofumpt -w .`
-- 環境変数の読み取りはconfig.goでのみ行う
+- 対応するソースが残っている状態で日本語のコメントのみを消去しない
+- github issueで修正を行い`git commit`する場合、timezoneはJSTを使用
 
 ## 動作確認
 
+- 下記を実行して整形
+  - `gofumpt -w .`
+- 下記を実行し、spell check
+  - `cspell .`
+- build成功を確認
+- `go test`実行
 - 編集対象のプロセスのgo.modがあるディレクトリで`golangci-lint run ./...`を実行し、警告が出ないことを確認
-- buildして動作確認する場合、動作確認完了後にバイナリを削除
+- publicメソッドは非常に単純なものを除いて基本的に単体テスト実装
