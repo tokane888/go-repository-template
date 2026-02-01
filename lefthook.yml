@@ -24,10 +24,19 @@ pre-push:
         fi
 
         # 各モジュールでgolangci-lintを実行
+        has_error=0
         for module in $modules; do
           echo "Running golangci-lint in $module"
-          (cd "$module" && golangci-lint run ./... --fix)
+          if ! (cd "$module" && golangci-lint run ./... --fix); then
+            echo "エラー: $module でgolangci-lintが失敗しました"
+            has_error=1
+          fi
         done
+
+        # いずれかのモジュールでエラーがあった場合は終了
+        if [ $has_error -eq 1 ]; then
+          exit 1
+        fi
 
         # 修正があった場合は警告を表示
         if [ -n "$(git diff)" ]; then
