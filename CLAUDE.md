@@ -137,6 +137,10 @@ DevContainerが提供するもの：
 - 対応するソースが残っている状態で日本語のコメントのみを消去しない
 - github issueで修正を行い`git commit`する場合、timezoneはJSTを使用
 
+## golangci-lint 設定について
+
+- 重要: .golangci.yml は v2 フォーマットを使用
+
 ## 動作確認
 
 - 下記を実行して整形
