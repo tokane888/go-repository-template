@@ -14,7 +14,7 @@ jobs:
       test-modules: ${{ steps.find.outputs.test-modules }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -56,12 +56,12 @@ jobs:
         module: ${{ fromJson(needs.find-modules.outputs.test-modules) }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: "1.24"
           cache-dependency-path: ${{ matrix.module }}/go.sum
@@ -83,12 +83,12 @@ jobs:
         module: ${{ fromJson(needs.find-modules.outputs.all-modules) }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: "1.24"
           cache-dependency-path: ${{ matrix.module }}/go.sum
@@ -98,7 +98,7 @@ jobs:
         run: go mod download
 
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v8
+        uses: golangci/golangci-lint-action@v9
         with:
           version: v2.4.0
           args: --config=${{ github.workspace }}/.golangci.yml
