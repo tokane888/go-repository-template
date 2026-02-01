@@ -97,9 +97,9 @@ jobs:
         working-directory: ${{ matrix.module }}
         run: go mod download
 
-      - name: Build packages to generate export data
+      - name: Build main packages to generate export data
         working-directory: ${{ matrix.module }}
-        run: go build ./...
+        run: go build ./cmd/...
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v9
