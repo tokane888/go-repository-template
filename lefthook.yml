@@ -1,6 +1,7 @@
 ---
 pre-commit:
   commands:
+    # コミットは使用頻度が高いためgolangci-lintは実行しない
     dprint-fmt:
       run: |
         files=$(echo "{staged_files}" | tr ' ' '\n' | grep -E '(Dockerfile|\.json|\.md)$' || true)
