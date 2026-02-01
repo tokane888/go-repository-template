@@ -98,6 +98,7 @@ jobs:
         run: go mod download
 
       - name: Build main packages to generate export data
+        if: startsWith(matrix.module, 'services/')
         working-directory: ${{ matrix.module }}
         run: go build ./cmd/...
 
