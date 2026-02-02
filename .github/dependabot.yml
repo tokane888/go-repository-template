@@ -19,3 +19,7 @@ updates:
     directory: "/pkg/logger"
     schedule:
       interval: monthly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
