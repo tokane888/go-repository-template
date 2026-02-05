@@ -47,7 +47,7 @@ jobs:
 
           while true; do
             # "Test and Lint" workflowの進行状況を取得
-            checks=$(gh pr checks "$PR_URL" --json state,workflow)
+            checks=$(gh pr checks "$PR_URL" --json state,workflow,name,event,startedAt)
             echo "$checks"
 
             # 既にFAILURE状態になっているstepがあれば終了
