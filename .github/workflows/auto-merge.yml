@@ -1,0 +1,39 @@
+name: auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+
+    # Dependabot PR に対してのみ実行
+    if: |
+      github.event.pull_request.user.login == 'dependabot[bot]'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - id: meta
+        uses: dependabot/fetch-metadata@v2
+
+      - name: auto merge (squash)
+        # パッチバージョンupdateは自動マージ
+        # github actionの更新はmajor version以外は自動マージ
+        if: >-
+          ${{ steps.meta.outputs.update-type == 'version-update:semver-patch' ||
+          (steps.meta.outputs.package-ecosystem == 'github_actions' &&
+          steps.meta.outputs.update-type != 'version-update:semver-major') }}
+        run: |
+          gh pr review "${GITHUB_HEAD_REF}" --approve
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
