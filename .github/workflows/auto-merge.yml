@@ -24,13 +24,32 @@ jobs:
       - id: meta
         uses: dependabot/fetch-metadata@v2
 
+      - id: check-auto-merge-condition
+        name: Check auto-merge condition
+        run: |
+          # パッチバージョンupdateは自動マージ
+          # github actionの更新はmajor version以外は自動マージ
+          if [[ "$UPDATE_TYPE" == "version-update:semver-patch" ]] || \
+             [[ "$PACKAGE_ECOSYSTEM" == "github_actions" && "$UPDATE_TYPE" != "version-update:semver-major" ]]; then
+            echo "should-merge=true" >> $GITHUB_OUTPUT
+            echo "✅ Auto-merge condition satisfied"
+          else
+            echo "should-merge=false" >> $GITHUB_OUTPUT
+            echo "⏭️  Auto-merge condition not satisfied, skipping..."
+          fi
+        env:
+          UPDATE_TYPE: ${{ steps.meta.outputs.update-type }}
+          PACKAGE_ECOSYSTEM: ${{ steps.meta.outputs.package-ecosystem }}
+
+      - name: Wait for all checks to complete
+        if: steps.check-auto-merge-condition.outputs.should-merge == 'true'
+        run: gh pr checks "$PR_URL" --watch
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: auto merge (squash)
-        # パッチバージョンupdateは自動マージ
-        # github actionの更新はmajor version以外は自動マージ
-        if: >-
-          ${{ steps.meta.outputs.update-type == 'version-update:semver-patch' ||
-          (steps.meta.outputs.package-ecosystem == 'github_actions' &&
-          steps.meta.outputs.update-type != 'version-update:semver-major') }}
+        if: steps.check-auto-merge-condition.outputs.should-merge == 'true'
         run: |
           gh pr review "${GITHUB_HEAD_REF}" --approve
           gh pr merge --auto --squash "$PR_URL"
