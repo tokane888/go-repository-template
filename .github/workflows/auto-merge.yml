@@ -40,9 +40,32 @@ jobs:
           UPDATE_TYPE: ${{ steps.meta.outputs.update-type }}
           PACKAGE_ECOSYSTEM: ${{ steps.meta.outputs.package-ecosystem }}
 
-      - name: Wait for all checks to complete
+      - name: Wait for "Test and Lint" workflow to complete
         if: steps.check-auto-merge-condition.outputs.should-merge == 'true'
-        run: gh pr checks "$PR_URL" --watch
+        run: |
+          echo "Waiting for test jobs to complete..."
+
+          while true; do
+            # "Test and Lint" workflowの進行状況を取得
+            checks=$(gh pr checks "$PR_URL" --json state,workflow)
+
+            # 既にFAILURE状態になっているstepがあれば終了
+            failed=$(echo "$checks" | jq '[.[] | select(.workflow | . == "Test and Lint") | select(.state | . == "FAILURE")] | length'
+            if [ "$failed" -gt 0 ]; then
+              echo "❌ Some test checks failed, skipping auto-merge"
+              exit 1
+            fi
+
+            # QUEUED又はIN_PROGRESS状態のstepがあれば待機。なければ完了
+            not_done=$(echo "$checks" | jq '[.[] | select(.workflow | . == "Test and Lint") | select(.state | . == "IN_PROGRESS")] | length')
+            if [ "$not_done" -eq 0 ]; then
+              echo "✅ All test checks completed"
+              break
+            fi
+
+            echo "⏳ Waiting for "Test and Lint" workflow to complete..."
+            sleep 10
+          done
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
