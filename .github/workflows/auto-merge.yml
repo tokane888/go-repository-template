@@ -50,7 +50,7 @@ jobs:
             checks=$(gh pr checks "$PR_URL" --json state,workflow)
 
             # 既にFAILURE状態になっているstepがあれば終了
-            failed=$(echo "$checks" | jq '[.[] | select(.workflow | . == "Test and Lint") | select(.state | . == "FAILURE")] | length'
+            failed=$(echo "$checks" | jq '[.[] | select(.workflow | . == "Test and Lint") | select(.state | . == "FAILURE")] | length')
             if [ "$failed" -gt 0 ]; then
               echo "❌ Some test checks failed, skipping auto-merge"
               exit 1
