@@ -2,7 +2,8 @@ name: auto-merge
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    # 本来reopenの際も自動マージしたいが、過去のtest-and-lint workflow実行結果を無視する処理が煩雑なので省略
+    types: [opened, synchronize]
     branches: [main]
 
 permissions:
