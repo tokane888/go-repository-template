@@ -51,14 +51,14 @@ jobs:
             echo "$checks" | jq .
 
             # 既にFAILURE状態になっているstepがあれば終了
-            failed=$(echo "$checks" | jq '[.[] | select(.workflow | . == "Test and Lint") | select(.state | . == "FAILURE")] | length')
+            failed=$(echo "$checks" | jq '[.[] | select(.workflow == "Test and Lint" and (.state == "FAILURE"))] | length')
             if [ "$failed" -gt 0 ]; then
               echo "❌ Some test checks failed, skipping auto-merge"
               exit 1
             fi
 
             # QUEUED又はIN_PROGRESS状態のstepがあれば待機。なければ完了
-            not_done=$(echo "$checks" | jq '[.[] | select(.workflow | . == "Test and Lint") | select(.state | . == "IN_PROGRESS")] | length')
+            not_done=$(echo "$checks" | jq '[.[] | select(.workflow == "Test and Lint" and (.state == "QUEUED" or .state == "IN_PROGRESS")] | length')
             if [ "$not_done" -eq 0 ]; then
               echo "✅ All test checks completed"
               break
