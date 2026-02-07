@@ -24,6 +24,7 @@
     "golangci",
     "gomod",
     "goreleaser",
+    "govulncheck",
     "incpatch",
     "infow",
     "isready",
