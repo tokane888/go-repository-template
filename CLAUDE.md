@@ -125,7 +125,7 @@ GitHub Actionsワークフローが以下を処理します：
 
 DevContainerが提供するもの：
 
-- Go 1.24
+- Go 1.25
 - golangci-lint
 - dprint
 - lefthook
