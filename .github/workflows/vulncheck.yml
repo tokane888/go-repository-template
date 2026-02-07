@@ -1,0 +1,52 @@
+---
+name: Go Vulnerability Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  find-modules:
+    name: Find Go Modules
+    runs-on: ubuntu-latest
+    outputs:
+      all-modules: ${{ steps.find.outputs.all-modules }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Find all Go modules
+        id: find
+        run: |
+          # -xオプションを指定しないとshell実行ログが出力されないため指定
+          set -x
+          # Find all modules
+          all_modules=$(find ./services ./pkg -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
+
+          # Convert to JSON array
+          all_modules_json=$(echo "$all_modules" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+
+          echo "All modules: $all_modules_json"
+          echo "all-modules=$all_modules_json" >> $GITHUB_OUTPUT
+
+  govulncheck:
+    name: Vulnerability Check (${{ matrix.module }})
+    runs-on: ubuntu-latest
+    needs: find-modules
+    strategy:
+      matrix:
+        module: ${{ fromJson(needs.find-modules.outputs.all-modules) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Run govulncheck
+        uses: golang/govulncheck-action@v1
+        with:
+          go-version-input: "1.25"
+          work-dir: ${{ matrix.module }}
+          go-package: ./...
