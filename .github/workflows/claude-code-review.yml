@@ -13,9 +13,9 @@ on:
 
 jobs:
   claude-review:
-    runs-on: ubuntu-latest
     # Dependabot PR はレビューしない
     if: github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
