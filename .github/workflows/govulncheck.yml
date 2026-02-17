@@ -22,7 +22,7 @@ jobs:
           # -xオプションを指定しないとshell実行ログが出力されないため指定
           set -x
           # Find all modules
-          all_modules=$(find ./services ./pkg -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
+          all_modules=$(find . -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
 
           # Convert to JSON array
           all_modules_json=$(echo "$all_modules" | jq -R -s -c 'split("\n") | map(select(length > 0))')
