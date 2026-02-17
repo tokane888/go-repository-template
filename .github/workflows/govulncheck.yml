@@ -3,6 +3,8 @@ name: Go Vulnerability Check
 on:
   push:
   pull_request:
+  schedule:
+    - cron: "0 16 * * *" # JST 1:00
 
 jobs:
   find-modules:
