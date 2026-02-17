@@ -1,7 +1,7 @@
 // TODO: モジュール名調整
 module github.com/tokane888/go-repository-template/services/api
 
-go 1.25.0
+go 1.25.7
 
 require (
 	github.com/gin-gonic/gin v1.11.0
