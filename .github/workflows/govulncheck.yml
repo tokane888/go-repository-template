@@ -46,3 +46,4 @@ jobs:
           go-version-input: "1.25.7"
           work-dir: ${{ matrix.module }}
           go-package: ./...
+          cache: false # git repositoryのルートでgo.sumを探して警告を出すことを抑止
