@@ -113,3 +113,26 @@ jobs:
           skip-cache: true
           # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
           # continue-on-error: true
+
+  spellcheck:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Run cspell
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          # 変更されたファイルのみチェック
+          incremental_files_only: true
+          # PRに警告アノテーションを追加
+          inline: warning
+          # 厳密モード無効（警告のみ、ブロックしない）
+          strict: false
+          # cspell設定ファイルを明示的に指定
+          config: .cspell.json
+        # エラーがあってもジョブを失敗させない
+        continue-on-error: true
