@@ -28,7 +28,7 @@ pre-push:
       # モノレポ構造に対応したlint実行
       run: |
         # go.modファイルを持つディレクトリを検索
-        modules=$(find ./services ./pkg -name "go.mod" 2>/dev/null | xargs dirname | sort)
+        modules=$(find . -name "go.mod" 2>/dev/null | xargs dirname | sort)
 
         if [ -z "$modules" ]; then
           echo "go.modファイルが見つかりませんでした。"
