@@ -24,7 +24,7 @@ jobs:
           # -xオプションを指定しないとshell実行ログが出力されないため指定
           set -x
           # Find all modules
-          all_modules=$(find ./services ./pkg -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
+          all_modules=$(find . -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
 
           # Find modules with test files
           test_modules=""
