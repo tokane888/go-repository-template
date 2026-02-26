@@ -11,6 +11,17 @@ pre-commit:
         fi
       stage_fixed: true
 
+    cspell:
+      run: |
+        files=$(echo "{staged_files}" | tr ' ' '\n' | grep -E '\.(go|json|yml|yaml)$' || true)
+        if [ -n "$files" ]; then
+          echo "Spell checking files:"
+          echo "$files"
+          echo "$files" | xargs -r cspell --no-must-find-files || echo "⚠️  Spelling issues found. Please review and fix if necessary."
+        fi
+      # エラーがあってもコミットを続行
+      fail_text: ""
+
 pre-push:
   commands:
     golangci-lint:
