@@ -9,7 +9,7 @@
     // TODO: claude code拡張。許可されない環境では除去
     "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {},
 
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:latest": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:latest": { "moby": false },
 
     // keyring等でOSが保持している認証情報はマウント出来ないので、その場合はlocalで実行
     "ghcr.io/devcontainers/features/github-cli:1": {}
