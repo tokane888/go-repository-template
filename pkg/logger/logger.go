@@ -44,8 +44,7 @@ func (h *customHandler) WithGroup(name string) slog.Handler {
 
 func localTimeReplacer(_ []string, a slog.Attr) slog.Attr {
 	if a.Key == slog.TimeKey {
-		jst := time.FixedZone("Asia/Tokyo", 9*60*60)
-		return slog.String(slog.TimeKey, a.Value.Time().In(jst).Format("2006-01-02T15:04:05.000Z07:00"))
+		return slog.String(slog.TimeKey, a.Value.Time().In(time.Local).Format("2006-01-02T15:04:05.000Z07:00"))
 	}
 	return a
 }
@@ -69,7 +68,7 @@ func NewLogger(cfg Config) *slog.Logger {
 	switch cfg.Format {
 	case "local":
 		// local環境では読みやすさ重視
-		// (非構造化ログ、JST固定、ミリ秒精度)
+		// (非構造化ログ、ローカルタイムゾーン、ミリ秒精度)
 		opts.ReplaceAttr = localTimeReplacer
 		inner = slog.NewTextHandler(os.Stderr, opts)
 	case "cloud":
