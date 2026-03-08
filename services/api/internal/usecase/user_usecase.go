@@ -4,12 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 
 	"github.com/google/uuid"
 	"github.com/tokane888/go-repository-template/services/api/internal/domain"
 	"github.com/tokane888/go-repository-template/services/api/internal/dto/request"
 	"github.com/tokane888/go-repository-template/services/api/internal/repository"
-	"go.uber.org/zap"
 )
 
 var (
@@ -25,10 +25,10 @@ type UserUseCase interface {
 
 type userUseCase struct {
 	userRepo repository.UserRepository
-	logger   *zap.Logger
+	logger   *slog.Logger
 }
 
-func NewUserUseCase(userRepo repository.UserRepository, logger *zap.Logger) UserUseCase {
+func NewUserUseCase(userRepo repository.UserRepository, logger *slog.Logger) UserUseCase {
 	return &userUseCase{
 		userRepo: userRepo,
 		logger:   logger,

@@ -5,20 +5,20 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log/slog"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/tokane888/go-repository-template/services/api/internal/domain"
 	"github.com/tokane888/go-repository-template/services/api/internal/repository"
-	"go.uber.org/zap"
 )
 
 type userRepositoryImpl struct {
 	db     *sql.DB
-	logger *zap.Logger
+	logger *slog.Logger
 }
 
-func NewUserRepository(db *sql.DB, logger *zap.Logger) repository.UserRepository {
+func NewUserRepository(db *sql.DB, logger *slog.Logger) repository.UserRepository {
 	return &userRepositoryImpl{
 		db:     db,
 		logger: logger,
@@ -161,7 +161,7 @@ func (r *userRepositoryImpl) List(ctx context.Context, limit, offset int) ([]*do
 	}
 	defer func() {
 		if closeErr := rows.Close(); closeErr != nil {
-			r.logger.Error("failed to close rows", zap.Error(closeErr))
+			r.logger.Error("failed to close rows", slog.Any("error", closeErr))
 		}
 	}()
 

@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
+	"os"
 	"os/signal"
 	"syscall"
 	"time"
@@ -17,7 +19,6 @@ import (
 	"github.com/tokane888/go-repository-template/services/api/internal/infrastructure/persistence"
 	"github.com/tokane888/go-repository-template/services/api/internal/router"
 	"github.com/tokane888/go-repository-template/services/api/internal/usecase"
-	"go.uber.org/zap"
 )
 
 // アプリのversion。デフォルトは開発版。cloud上ではbuild時に-ldflagsフラグ経由でバージョンを埋め込む
@@ -29,17 +30,16 @@ func main() {
 		log.Fatalf("failed to load config: %v", err)
 	}
 	logger := pkglogger.NewLogger(cfg.Logger)
-	//nolint: errcheck
-	defer logger.Sync()
 
 	// データベース接続
 	database, err := db.Connect(&cfg.DatabaseConfig)
 	if err != nil {
-		logger.Fatal("failed to connect to database", zap.Error(err))
+		logger.Error("failed to connect to database", slog.Any("error", err))
+		os.Exit(1)
 	}
 	defer func() {
 		if closeErr := database.Close(); closeErr != nil {
-			logger.Error("failed to close database connection", zap.Error(closeErr))
+			logger.Error("failed to close database connection", slog.Any("error", closeErr))
 		}
 	}()
 
@@ -63,9 +63,10 @@ func main() {
 
 	// サーバーをgoroutineで起動
 	go func() {
-		logger.Info("starting API server", zap.Int("port", cfg.RouterConfig.Port))
+		logger.Info("starting API server", slog.Int("port", cfg.RouterConfig.Port))
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Fatal("listen error", zap.Error(err))
+			logger.Error("listen error", slog.Any("error", err))
+			os.Exit(1)
 		}
 	}()
 
@@ -77,7 +78,7 @@ func main() {
 	shutdownCtx, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.ShutdownTimeout)*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(shutdownCtx); err != nil {
-		logger.Error("server forced to shutdown", zap.Error(err))
+		logger.Error("server forced to shutdown", slog.Any("error", err))
 	}
 
 	logger.Info("server exited")

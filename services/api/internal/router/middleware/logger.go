@@ -2,13 +2,14 @@ package middleware
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
+	"log/slog"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
 // 機密情報のフィールド名
@@ -28,7 +29,7 @@ func (w responseWriter) Write(b []byte) (int, error) {
 	return w.ResponseWriter.Write(b)
 }
 
-func Logger(logger *zap.Logger) gin.HandlerFunc {
+func Logger(logger *slog.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path
@@ -49,39 +50,39 @@ func Logger(logger *zap.Logger) gin.HandlerFunc {
 		c.Next()
 
 		// ログフィールド
-		fields := []zap.Field{
-			zap.String("method", c.Request.Method),
-			zap.String("path", path),
-			zap.String("query", query),
-			zap.Int("status", c.Writer.Status()),
-			zap.String("ip", c.ClientIP()),
-			zap.String("user_agent", c.Request.UserAgent()),
-			zap.Duration("latency", time.Since(start)),
+		attrs := []slog.Attr{
+			slog.String("method", c.Request.Method),
+			slog.String("path", path),
+			slog.String("query", query),
+			slog.Int("status", c.Writer.Status()),
+			slog.String("ip", c.ClientIP()),
+			slog.String("user_agent", c.Request.UserAgent()),
+			slog.Duration("latency", time.Since(start)),
 		}
 
 		// リクエストヘッダー（機密情報をマスク）
 		maskedHeaders := maskHeaders(c.Request.Header)
-		fields = append(fields, zap.Any("request_headers", maskedHeaders))
+		attrs = append(attrs, slog.Any("request_headers", maskedHeaders))
 
 		// リクエストボディ（機密情報をマスク）
 		if len(requestBody) > 0 && isJSON(c.GetHeader("Content-Type")) {
 			maskedBody := maskJSON(requestBody)
-			fields = append(fields, zap.Any("request_body", maskedBody))
+			attrs = append(attrs, slog.Any("request_body", maskedBody))
 		}
 
 		// レスポンスボディ（エラーレスポンスのみ記録）
 		if c.Writer.Status() >= 400 && blw.body.Len() > 0 {
-			fields = append(fields, zap.String("response_body", blw.body.String()))
+			attrs = append(attrs, slog.String("response_body", blw.body.String()))
 		}
 
 		// ログレベルの決定
 		switch {
 		case c.Writer.Status() >= 500:
-			logger.Error("request failed", fields...)
+			logger.LogAttrs(context.Background(), slog.LevelError, "request failed", attrs...)
 		case c.Writer.Status() >= 400:
-			logger.Warn("request error", fields...)
+			logger.LogAttrs(context.Background(), slog.LevelWarn, "request error", attrs...)
 		default:
-			logger.Info("request completed", fields...)
+			logger.LogAttrs(context.Background(), slog.LevelInfo, "request completed", attrs...)
 		}
 	}
 }

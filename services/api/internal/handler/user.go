@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,6 @@ import (
 	"github.com/tokane888/go-repository-template/services/api/internal/dto/request"
 	"github.com/tokane888/go-repository-template/services/api/internal/dto/response"
 	"github.com/tokane888/go-repository-template/services/api/internal/usecase"
-	"go.uber.org/zap"
 )
 
 func (h *Handler) CreateUser(c *gin.Context) {
@@ -48,7 +48,7 @@ func (h *Handler) CreateUser(c *gin.Context) {
 			c.JSON(http.StatusConflict, response.NewError("USER_ALREADY_EXISTS", "ユーザーは既に存在します"))
 			return
 		}
-		h.logger.Error("failed to create user", zap.Error(err))
+		h.logger.Error("failed to create user", slog.Any("error", err))
 		c.JSON(http.StatusInternalServerError, response.NewError("INTERNAL_ERROR", "内部エラーが発生しました"))
 		return
 	}
@@ -65,7 +65,7 @@ func (h *Handler) ListUsers(c *gin.Context) {
 
 	users, total, err := h.userUseCase.ListUsers(c.Request.Context(), q.Limit, q.Offset)
 	if err != nil {
-		h.logger.Error("failed to list users", zap.Error(err))
+		h.logger.Error("failed to list users", slog.Any("error", err))
 		c.JSON(http.StatusInternalServerError, response.NewError("INTERNAL_ERROR", "内部エラーが発生しました"))
 		return
 	}
@@ -87,7 +87,7 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 			c.JSON(http.StatusNotFound, response.NewError("USER_NOT_FOUND", "ユーザーが見つかりません"))
 			return
 		}
-		h.logger.Error("failed to delete user", zap.Error(err), zap.String("user_id", id.String()))
+		h.logger.Error("failed to delete user", slog.Any("error", err), slog.String("user_id", id.String()))
 		c.JSON(http.StatusInternalServerError, response.NewError("INTERNAL_ERROR", "内部エラーが発生しました"))
 		return
 	}

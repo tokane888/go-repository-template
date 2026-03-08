@@ -1,12 +1,12 @@
 package logger
 
 import (
+	"context"
 	"fmt"
+	"log/slog"
 	"os"
+	"runtime"
 	"time"
-
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 type Config struct {
@@ -17,48 +17,83 @@ type Config struct {
 	AppVersion string // アプリのバージョン(cloudでのみログ出力)
 }
 
-func NewLogger(cfg Config) *zap.Logger {
-	var zapCfg zap.Config
+type customHandler struct {
+	inner slog.Handler
+}
+
+func (h *customHandler) Enabled(ctx context.Context, level slog.Level) bool {
+	return h.inner.Enabled(ctx, level)
+}
+
+func (h *customHandler) Handle(ctx context.Context, r slog.Record) error {
+	if r.Level >= slog.LevelError {
+		buf := make([]byte, 4096)
+		n := runtime.Stack(buf, false)
+		r.AddAttrs(slog.String("stacktrace", string(buf[:n])))
+	}
+	return h.inner.Handle(ctx, r)
+}
+
+func (h *customHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
+	return &customHandler{inner: h.inner.WithAttrs(attrs)}
+}
+
+func (h *customHandler) WithGroup(name string) slog.Handler {
+	return &customHandler{inner: h.inner.WithGroup(name)}
+}
+
+func localTimeReplacer(_ []string, a slog.Attr) slog.Attr {
+	if a.Key == slog.TimeKey {
+		jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+		return slog.String(slog.TimeKey, a.Value.Time().In(jst).Format("2006-01-02T15:04:05.000Z07:00"))
+	}
+	return a
+}
+
+func cloudTimeReplacer(_ []string, a slog.Attr) slog.Attr {
+	if a.Key == slog.TimeKey {
+		return slog.String(slog.TimeKey, a.Value.Time().UTC().Format(time.RFC3339Nano))
+	}
+	return a
+}
+
+func NewLogger(cfg Config) *slog.Logger {
+	var level slog.Level
+	if err := level.UnmarshalText([]byte(cfg.Level)); err != nil {
+		fmt.Fprintf(os.Stderr, "invalid LOG_LEVEL %q, fallback to 'info'\n", cfg.Level)
+		level = slog.LevelInfo
+	}
+	opts := &slog.HandlerOptions{Level: level, AddSource: true}
+
+	var inner slog.Handler
 	switch cfg.Format {
 	case "local":
 		// local環境では読みやすさ重視
 		// (非構造化ログ、JST固定、ミリ秒精度)
-		zapCfg = zap.NewDevelopmentConfig()
-		zapCfg.EncoderConfig.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-			jst := t.In(time.FixedZone("Asia/Tokyo", 9*60*60))
-			enc.AppendString(jst.Format("2006-01-02T15:04:05.000Z07:00"))
-		}
+		opts.ReplaceAttr = localTimeReplacer
+		inner = slog.NewTextHandler(os.Stderr, opts)
 	case "cloud":
 		// cloud環境ではcloud watch等で読まれる前提で解析重視
 		// (構造化ログ、UTC、ナノ秒精度)
-		zapCfg = zap.NewProductionConfig()
-		zapCfg.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout(time.RFC3339Nano)
+		opts.ReplaceAttr = cloudTimeReplacer
+		inner = slog.NewJSONHandler(os.Stderr, opts)
 	default:
 		// LOG_FORMATが不正の場合、cloud向けフォーマットで出力
 		fmt.Fprintf(os.Stderr, "invalid LOG_FORMAT %q, fallback to 'cloud'\n", cfg.Format)
-		zapCfg = zap.NewProductionConfig()
-		zapCfg.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout(time.RFC3339Nano)
+		opts.ReplaceAttr = cloudTimeReplacer
+		inner = slog.NewJSONHandler(os.Stderr, opts)
 	}
 
-	// ログレベル設定
-	parsedLevel := zapcore.InfoLevel
-	if err := parsedLevel.UnmarshalText([]byte(cfg.Level)); err != nil {
-		fmt.Fprintf(os.Stderr, "invalid LOG_LEVEL %q, fallback to 'info'\n", cfg.Level)
-	}
-	zapCfg.Level = zap.NewAtomicLevelAt(parsedLevel)
-
-	// error時のみStackTrace出力するよう設定
-	zapCfg.DisableStacktrace = true
-	logger, _ := zapCfg.Build(
-		zap.AddStacktrace(zapcore.ErrorLevel),
-	)
+	// Errorレベルにスタックトレースを付与するカスタムHandler
+	handler := &customHandler{inner: inner}
+	logger := slog.New(handler)
 
 	// cloud向けはフィールド追加
 	if cfg.Format == "cloud" {
 		logger = logger.With(
-			zap.String("app", cfg.AppName),
-			zap.String("env", cfg.Env),
-			zap.String("version", cfg.AppVersion),
+			slog.String("app", cfg.AppName),
+			slog.String("env", cfg.Env),
+			slog.String("version", cfg.AppVersion),
 		)
 	}
 

@@ -1,10 +1,11 @@
 package router
 
 import (
+	"log/slog"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tokane888/go-repository-template/services/api/internal/handler"
 	"github.com/tokane888/go-repository-template/services/api/internal/router/middleware"
-	"go.uber.org/zap"
 )
 
 type Config struct {
@@ -13,12 +14,12 @@ type Config struct {
 
 type Router struct {
 	config  *Config
-	logger  *zap.Logger
+	logger  *slog.Logger
 	engine  *gin.Engine
 	handler *handler.Handler
 }
 
-func NewRouter(config *Config, logger *zap.Logger, handler *handler.Handler) *Router {
+func NewRouter(config *Config, logger *slog.Logger, handler *handler.Handler) *Router {
 	return &Router{
 		config:  config,
 		logger:  logger,
