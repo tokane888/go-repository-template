@@ -29,6 +29,7 @@ func LoadConfig(version string) (*Config, error) {
 		Logger: logger.Config{
 			AppName:    getEnv("APP_NAME", ""),
 			AppVersion: version,
+			Env:        env,
 			Level:      getEnv("LOG_LEVEL", "info"),
 			Format:     getEnv("LOG_FORMAT", "local"),
 		},
