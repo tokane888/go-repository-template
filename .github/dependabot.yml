@@ -10,11 +10,11 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/services/sample"
     schedule:
-      interval: monthly
+      interval: weekly
   - package-ecosystem: "gomod"
     directory: "/pkg/logger"
     schedule:
-      interval: monthly
+      interval: weekly
   - package-ecosystem: github-actions
     directory: /
     schedule:
