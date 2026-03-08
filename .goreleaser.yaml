@@ -14,32 +14,11 @@ before:
     - find services -name go.mod -exec dirname {} \; | xargs -I {} sh -c 'cd {} && go mod tidy'
 
 builds:
-  # API Service build configuration
-  - id: api
-    dir: services/api
-    main: ./cmd/api
-    binary: api
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-    goarch:
-      - amd64
-      - arm64
-    flags:
-      - -trimpath
-    ldflags:
-      - -s -w
-      - -X main.version={{.Version}}
-      - -X main.commit={{.ShortCommit}}
-      - -X main.date={{.Date}}
-    mod_timestamp: "{{ .CommitTimestamp }}"
-
-  # Batch Service build configuration
-  - id: batch
-    dir: services/batch
-    main: ./cmd/batch
-    binary: batch
+  # Sample Service build configuration
+  - id: sample
+    dir: services/sample
+    main: ./cmd/sample
+    binary: sample
     env:
       - CGO_ENABLED=0
     goos:
@@ -55,25 +34,12 @@ builds:
     mod_timestamp: "{{ .CommitTimestamp }}"
 
 archives:
-  # API Service archive
-  - id: api-archive
+  # Sample Service archive
+  - id: sample-archive
     ids:
-      - api
+      - sample
     name_template: >-
-      api_
-      {{- .Version }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else }}{{ .Arch }}{{ end }}
-    files:
-      - none* # Only include the binary
-
-  # Batch Service archive
-  - id: batch-archive
-    ids:
-      - batch
-    name_template: >-
-      batch_
+      sample_
       {{- .Version }}_
       {{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64

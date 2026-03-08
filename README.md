@@ -7,9 +7,8 @@ Go モノレポ構成のテンプレートリポジトリ
 ```sh
 .
 ├── services/          # サービス群
-│   └── api/          # サンプル API サービス
+│   └── sample/       # サンプルサービス
 │       ├── cmd/
-│       ├── configs/
 │       ├── .env/
 │       └── go.mod
 ├── pkg/              # 共通モジュール
@@ -37,7 +36,7 @@ Go モノレポ構成のテンプレートリポジトリ
 
 - devcontainerを使用しない場合
   - .devcontainer ディレクトリ削除
-- `services/api/` を実際のサービス名に変更
+- `services/sample/` を実際のサービス名に変更
 - 新しいサービス追加時は `services/` 配下に作成
 - リポジトリ内から"TODO: "を検索し、修正
 - リポジトリ内から"go-repository-template"を検索し、修正
@@ -52,9 +51,9 @@ Go モノレポ構成のテンプレートリポジトリ
 ## サービス実行例
 
 ```bash
-# API サービスの実行
-cd services/api
-go run ./cmd/app
+# サンプルサービスの実行
+cd services/sample
+go run ./cmd/sample
 ```
 
 ## サービスデバッグ実行例
@@ -62,14 +61,3 @@ go run ./cmd/app
 - ctrl+shift+dで"RUN AND DEBUG"メニューを開く
 - 上のメニューからデバッグ実行したいserviceを選択
 - F5押下でデバッグ実行
-
-## local環境向けの各種コマンド例
-
-- 開発用postgres DBログイン
-  - `docker exec -it go-repository-template_devcontainer-postgres-1 psql -U postgres -d api_db`
-- user一覧取得
-  - `curl http://localhost:8080/api/v1/users -H 'x-api-key: dummy'`
-- user登録
-  - `curl -X POST http://localhost:8080/api/v1/users -H 'x-api-key: dummy' -d '{"email": "hoge@test.com", "username": "test_user", "password": "test_password_123"}'`
-- user削除
-  - `curl -X DELETE http://localhost:8080/api/v1/users/e5fa7ced-3a09-479b-a6f1-0c24cadbebe3 -H 'x-api-key: dummy'`

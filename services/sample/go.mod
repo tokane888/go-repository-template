@@ -1,5 +1,5 @@
 // TODO: モジュール名調整
-module github.com/tokane888/go-repository-template/services/batch
+module github.com/tokane888/go-repository-template/services/sample
 
 go 1.25.7
 

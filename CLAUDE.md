@@ -11,11 +11,11 @@
 ```text
 .
 ├── services/           # 個別のマイクロサービス
-│   └── api/           # APIサービスの例
-│       ├── cmd/api/   # アプリケーションエントリーポイント (main.go)
+│   └── sample/        # サンプルサービス
+│       ├── cmd/sample/ # アプリケーションエントリーポイント (main.go)
 │       └── internal/  # プライベートアプリケーションコード
 ├── pkg/               # サービス間で共有されるパッケージ
-│   └── logger/        # uber/zapを使用した共有ロギングパッケージ
+│   └── logger/        # slogを使用した共有ロギングパッケージ
 ├── .devcontainer/     # VS Code DevContainer設定
 └── .github/           # GitHub Actionsワークフロー
 ```
@@ -25,8 +25,8 @@
 ### サービスの実行
 
 ```bash
-# サービスディレクトリから実行（例：services/api/）
-go run cmd/api/main.go
+# サービスディレクトリから実行（例：services/sample/）
+go run cmd/sample/main.go
 ```
 
 ### リンティング
@@ -56,7 +56,7 @@ dprint check
 
 ```bash
 # サービスの依存関係を更新
-cd services/api
+cd services/sample
 go mod tidy
 
 # すべてのモジュールを更新
@@ -84,7 +84,7 @@ lefthook run pre-push
 
 4. **設定管理**: godotenvを使用して `.env/.env.{ENV}` ファイルから環境固有の設定を読み込みます。
 
-5. **構造化ログ**: すべてのサービスがzapを使用した共有ロガーパッケージを使用し、本番環境で一貫したJSONログを出力します。
+5. **構造化ログ**: すべてのサービスがslogを使用した共有ロガーパッケージを使用し、本番環境で一貫したJSONログを出力します。
 
 ## 主要な設定ファイル
 
