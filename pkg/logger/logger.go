@@ -92,7 +92,7 @@ func NewLogger(cfg Config) *slog.Logger {
 		logger = logger.With(
 			slog.String("app", cfg.AppName),
 			slog.String("env", cfg.Env),
-			slog.String("version", cfg.AppVersion),
+			slog.String("ver", cfg.AppVersion),
 		)
 	}
 
