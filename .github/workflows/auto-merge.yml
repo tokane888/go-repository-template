@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v6
 
       - id: meta
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
 
       - id: check-auto-merge-condition
         name: Check auto-merge condition
