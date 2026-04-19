@@ -1,7 +1,7 @@
 // TODO: モジュール名調整
 module github.com/tokane888/go-repository-template/services/sample
 
-go 1.25.7
+go 1.26.2
 
 require (
 	github.com/joho/godotenv v1.5.1
