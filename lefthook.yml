@@ -49,3 +49,29 @@ pre-push:
         if [ $has_error -eq 1 ]; then
           exit 1
         fi
+    deadcode:
+      run: |
+        # mainパッケージを持つgo.modのディレクトリを検索
+        main_modules=$(find . -name "go.mod" 2>/dev/null | xargs dirname | while read dir; do
+          grep -r --include="*.go" -l "^package main" "$dir" > /dev/null 2>&1 && echo "$dir"
+        done | sort)
+
+        if [ -z "$main_modules" ]; then
+          echo "mainパッケージが見つかりませんでした。"
+          exit 0
+        fi
+
+        has_error=0
+        for module in $main_modules; do
+          echo "Running deadcode in $module"
+          output=$(cd "$module" && deadcode ./... 2>&1)
+          if [ -n "$output" ]; then
+            echo "$output"
+            echo "エラー: $module でdeadcodeが失敗しました"
+            has_error=1
+          fi
+        done
+
+        if [ $has_error -eq 1 ]; then
+          exit 1
+        fi

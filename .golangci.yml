@@ -19,6 +19,7 @@ linters:
     - noctx # contextの使用漏れ
     - revive # golint代替
     - rowserrcheck # データベース操作のエラーチェック
+    - unused # deadcode検知
 
     #  パフォーマンス系
     - perfsprint # 文字列連結の最適化
