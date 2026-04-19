@@ -108,7 +108,7 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
-          version: v2.4.0
+          version: v2.11.4
           args: --config=${{ github.workspace }}/.golangci.yml
           working-directory: ${{ matrix.module }}
           # デフォルトではcacheは`~/.cache/golangci-lint`に保存される。
