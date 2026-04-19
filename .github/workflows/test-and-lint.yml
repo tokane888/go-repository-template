@@ -72,7 +72,7 @@ jobs:
 
       - name: Run tests
         working-directory: ${{ matrix.module }}
-        run: go test -v ./...
+        run: go test -v -cover ./...
 
   lint:
     name: Lint (${{ matrix.module }})
