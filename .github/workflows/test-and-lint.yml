@@ -47,7 +47,7 @@ jobs:
 
           echo "all-modules=$all_modules_json" >> $GITHUB_OUTPUT
           echo "test-modules=$test_modules_json" >> $GITHUB_OUTPUT
-          echo "main-modules=$main_modules_json" >> $GITHUB_OUTPUT  # 追加
+          echo "main-modules=$main_modules_json" >> $GITHUB_OUTPUT
 
   test:
     name: Test (${{ matrix.module }})
