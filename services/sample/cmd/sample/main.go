@@ -14,7 +14,7 @@ import (
 var version = "dev"
 
 func main() {
-	cfg, err := config.LoadConfig(version)
+	cfg, err := config.NewConfig(version)
 	if err != nil {
 		log.Fatal("failed to load config: ", err)
 	}
