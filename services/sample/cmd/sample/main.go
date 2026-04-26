@@ -25,5 +25,5 @@ func main() {
 	logger.Warn("sample warn")
 	logger.Error("sample error")
 	err = errors.New("errorのサンプル")
-	logger.Error("sample error with detail", slog.Any("error", err))
+	logger.Error("sample error with detail", "err", err)
 }
