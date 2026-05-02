@@ -5,22 +5,26 @@ run:
 
 linters:
   enable:
-    #  エラーチェック系
+    # エラーチェック系
     - errcheck # エラーチェックの漏れを検出
     - errorlint # エラー処理のベストプラクティス
     - govet # コンパイルエラーや疑わしいコードを検出
     - staticcheck # 高度な静的解析
 
-    #  コード品質系
+    # コード品質系
     - gocritic # コードの改善提案
     - gosec # セキュリティチェック
     - ineffassign # 無効な代入の検出
     - noctx # contextの使用漏れ
-    - revive # golint代替
     - rowserrcheck # データベース操作のエラーチェック
     - unused # deadcode検知
+    - unparam # 未使用の引数、常にnilの返り値等検出
+    - gocyclo # for, if, switch等の多い、複雑な関数を検知
+    - goconst # 定数化可能な繰り返し登場する文字列を検知
+    - prealloc # 非効率な繰り返しのappendを検知
+    - gocritic # 空slice検知
 
-    #  パフォーマンス系
+    # パフォーマンス系
     - perfsprint # 文字列連結の最適化
   settings:
     govet:
@@ -34,9 +38,11 @@ linters:
     gosec:
       excludes:
         - G112 # Potential Slowloris Attack (ReadHeaderTimeout)
+    unparam:
+      check-exported: true
   exclusions:
     rules:
-      #  test fileで一部のlinterを無効化
+      # test fileで一部のlinterを無効化
       - path: _test\.go
         linters:
           - errcheck
