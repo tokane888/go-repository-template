@@ -20,8 +20,6 @@ Go モノレポ構成のテンプレートリポジトリ
 ## 開発環境構築手順
 
 - devcontainer起動
-- 下記実行でcommit前git hook登録
-  - `lefthook install`
 
 ## 設計方針
 
