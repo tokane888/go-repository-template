@@ -1,5 +1,7 @@
 #!/bin/bash
 
+lefthook install
+
 # mcp install
 # TODO: claude codeを使用しない場合削除
 
