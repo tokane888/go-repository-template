@@ -1,9 +1,8 @@
----
 name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [ opened, synchronize ]
     # Optional: Only run on specific file changes
     # paths:
     #   - "src/**/*.ts"
@@ -44,7 +43,6 @@ jobs:
             - Security concerns
             - Test coverage
             Be constructive and helpful in your feedback.
-
           # Optional: Use sticky comments to make Claude reuse the same comment on subsequent pushes to the same PR
           # use_sticky_comment: true
           # Optional: Customize review based on file types
