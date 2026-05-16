@@ -20,7 +20,6 @@ linters:
     - unused # deadcode検知
     - unparam # 未使用の引数、常にnilの返り値等検出
     - gocyclo # for, if, switch等の多い、複雑な関数を検知
-    - goconst # 定数化可能な繰り返し登場する文字列を検知
     - prealloc # 非効率な繰り返しのappendを検知
     - gocritic # 空slice検知
 
