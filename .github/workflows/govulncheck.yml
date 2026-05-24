@@ -21,7 +21,7 @@ jobs:
       - name: Find all Go modules
         id: find
         run: |
-          # -xオプションを指定しないとshell実行ログが出力されないため指定
+          # -x is required to print shell execution logs
           set -x
           # Find all modules
           all_modules=$(find . -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
@@ -47,4 +47,4 @@ jobs:
           go-version-input: "1.26.2"
           work-dir: ${{ matrix.module }}
           go-package: ./...
-          cache: false # git repositoryのルートでgo.sumを探して警告を出すことを抑止
+          cache: false # suppress warnings from searching for go.sum at the repository root

@@ -52,11 +52,11 @@ checksum:
   algorithm: sha256
 
 changelog:
-  sort: desc # 新しい順にコミットを一覧表示
+  sort: desc # list commits in newest-first order
   use: github
   filters:
     exclude:
-      # "docs:", "test:"から始まるコミットは処理と無関係なのでrelease noteから除外
+      # exclude commits starting with "docs:" or "test:" as they are unrelated to releases
       - "^docs:"
       - "^test:"
       - "Merge pull request"
@@ -71,7 +71,7 @@ release:
   header: |
     ## {{.ProjectName}} {{.Tag}} ({{.Date}})
 
-    (適宜リリース内容記載)
+    (Add release notes here)
 
   footer: |
     ---

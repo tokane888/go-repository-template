@@ -1,6 +1,6 @@
 {
   "ignorePaths": [
-    // vscode拡張名, libの名前等固有名詞が多いファイルはspell check対象から除外
+    // exclude files with many proper nouns such as VS Code extension names and library names
     ".devcontainer/devcontainer.json",
     ".devcontainer/Dockerfile",
     ".golangci.yml",
@@ -44,7 +44,8 @@
     "usecase",
     "yzhang"
   ],
+  // TODO: remove if Japanese not used
   "ignoreRegExpList": [
-    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // 日本語に対してspell checkが正常に機能しないのでcheck対象から除外
+    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // exclude Japanese characters because spell check does not work correctly on them
   ]
 }

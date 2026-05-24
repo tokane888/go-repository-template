@@ -1,4 +1,4 @@
-// TODO: 下記のモジュール名をgit repository内で検索してreplace
+// TODO: search and replace the module name below across the git repository
 module github.com/tokane888/go-repository-template/services/sample
 
 go 1.26.2

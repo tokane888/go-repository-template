@@ -9,7 +9,7 @@ import (
 	"github.com/tokane888/go-repository-template/services/sample/internal/config"
 )
 
-// アプリのversion。デフォルトは開発版。cloud上ではbuild時に-ldflagsフラグ経由でバージョンを埋め込む
+// App version. Defaults to dev build. On cloud, injected at build time via -ldflags.
 var version = "dev"
 
 func main() {
@@ -23,6 +23,6 @@ func main() {
 	logger.Info("additional field sample", slog.String("key", "value"))
 	logger.Warn("sample warn")
 	logger.Error("sample error")
-	err = errors.New("errorのサンプル")
+	err = errors.New("sample error")
 	logger.Error("sample error with detail", "err", err)
 }

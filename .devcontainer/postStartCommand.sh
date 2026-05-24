@@ -2,8 +2,8 @@
 
 USER=$(whoami)
 
-# hostの~/.ssh​が/tmp/.sshへマウントされているので、それをHOMEディレクトリへコピー。
-# 直接HOMEディレクトリにマウントしようとすると既存のものがあり失敗するため
+# host ~/.ssh is mounted at /tmp/.ssh; copy it to the HOME directory.
+# mounting directly into HOME fails because the directory already exists.
 cp -r /tmp/.ssh "${HOME}"
 chown -R "${USER}":"${USER}" "${HOME}"/.ssh
 chmod 600 "${HOME}"/.ssh/*
