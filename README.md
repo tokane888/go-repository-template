@@ -1,62 +1,62 @@
 # go-repository-template
 
-Go モノレポ構成のテンプレートリポジトリ
+Template repository for Go monorepo architecture
 
-## ディレクトリ構成
+## Directory Structure
 
 ```sh
 .
-├── services/          # サービス群
-│   └── sample/       # サンプルサービス
+├── services/          # Services
+│   └── sample/       # Sample service
 │       ├── cmd/
 │       ├── .env/
 │       └── go.mod
-├── pkg/              # 共通モジュール
-│   └── logger/       # ログ関連
+├── pkg/              # Shared modules
+│   └── logger/       # Logging
 │       └── go.mod
 └── README.md
 ```
 
-## 開発環境構築手順
+## Development Environment Setup
 
-- devcontainer起動
+- Start the devcontainer
 
-## 設計方針
+## Design Principles
 
-- ディレクトリ構成は[Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)に従う
-- Go モノレポによる複数サービス管理
-- 各サービスは独立した go.mod を持つ
-- 共通モジュールは `pkg/` ディレクトリに配置
-  - replace ディレクティブでローカル参照
-- 設計はクリーンアーキテクチャに従う
-- commit文はConventional Commitsに従う
+- Directory structure follows [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)
+- Multiple services managed in a Go monorepo
+- Each service has its own go.mod
+- Shared modules placed in `pkg/` directory
+  - Referenced locally via replace directives
+- Architecture follows Clean Architecture
+- Commit messages follow Conventional Commits
 
-## テンプレ使用時のTODO
+## TODO When Using This Template
 
-- devcontainerを使用しない場合
-  - .devcontainer ディレクトリ削除
-- `services/sample/` を実際のサービス名に変更
-- 新しいサービス追加時は `services/` 配下に作成
-- リポジトリ内から"TODO: "を検索し、修正
-- リポジトリ内から"go-repository-template"を検索し、修正
-- CLAUDE.mdは削除の上claude内で`/init`で再生成して調整
-- claude codeを使用しない場合は下記で関連ファイルを探索して削除
+- If not using devcontainer
+  - Delete the .devcontainer directory
+- Rename `services/sample/` to the actual service name
+- Create new services under `services/`
+- Search for "TODO: " in the repository and address them
+- Search for "go-repository-template" in the repository and update
+- Delete CLAUDE.md and regenerate with `/init` inside claude
+- If not using Claude Code, find and delete related files with:
   - `find . -name '*claude*' -not -path './.git/*'`
-- services配下の不要なservice, README.mdは適宜削除
-- claude codeによるレビューを可能にする場合、`claude`コマンド実行後、下記でgithub appをインストール
+- Remove unused services and README.md under services as needed
+- To enable code review by Claude Code, run the `claude` command and then install the GitHub app with:
   - `/install-github-app`
-    - 詳細は[公式](https://docs.anthropic.com/en/docs/claude-code/github-actions)参照
+    - See the [official docs](https://docs.anthropic.com/en/docs/claude-code/github-actions) for details
 
-## サービス実行例
+## Service Run Example
 
 ```bash
-# サンプルサービスの実行
+# Run the sample service
 cd services/sample
 go run ./cmd/sample
 ```
 
-## サービスデバッグ実行例
+## Service Debug Run Example
 
-- ctrl+shift+dで"RUN AND DEBUG"メニューを開く
-- 上のメニューからデバッグ実行したいserviceを選択
-- F5押下でデバッグ実行
+- Open the "RUN AND DEBUG" menu with ctrl+shift+d
+- Select the service to debug from the top menu
+- Press F5 to start debugging

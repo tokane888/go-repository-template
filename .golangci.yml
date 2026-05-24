@@ -5,26 +5,26 @@ run:
 
 linters:
   enable:
-    # エラーチェック系
-    - errcheck # エラーチェックの漏れを検出
-    - errorlint # エラー処理のベストプラクティス
-    - govet # コンパイルエラーや疑わしいコードを検出
-    - staticcheck # 高度な静的解析
+    # Error checking
+    - errcheck # detect missing error checks
+    - errorlint # error handling best practices
+    - govet # detect compile errors and suspicious code
+    - staticcheck # advanced static analysis
 
-    # コード品質系
-    - gocritic # コードの改善提案
-    - gosec # セキュリティチェック
-    - ineffassign # 無効な代入の検出
-    - noctx # contextの使用漏れ
-    - rowserrcheck # データベース操作のエラーチェック
-    - unused # deadcode検知
-    - unparam # 未使用の引数、常にnilの返り値等検出
-    - gocyclo # for, if, switch等の多い、複雑な関数を検知
-    - prealloc # 非効率な繰り返しのappendを検知
-    - gocritic # 空slice検知
+    # Code quality
+    - gocritic # code improvement suggestions
+    - gosec # security checks
+    - ineffassign # detect ineffectual assignments
+    - noctx # detect missing context usage
+    - rowserrcheck # error checks for database operations
+    - unused # dead code detection
+    - unparam # detect unused parameters and always-nil return values
+    - gocyclo # detect complex functions with many for/if/switch branches
+    - prealloc # detect inefficient repeated appends
+    - gocritic # empty slice detection
 
-    # パフォーマンス系
-    - perfsprint # 文字列連結の最適化
+    # Performance
+    - perfsprint # string concatenation optimization
   settings:
     govet:
       enable-all: true
@@ -41,7 +41,7 @@ linters:
       check-exported: true
   exclusions:
     rules:
-      # test fileで一部のlinterを無効化
+      # disable some linters for test files
       - path: _test\.go
         linters:
           - errcheck

@@ -8,11 +8,11 @@ import (
 	"github.com/tokane888/go-repository-template/pkg/logger"
 )
 
-// Config 環境変数を読み取り、各struct向けのConfigを保持
+// Config reads environment variables and holds per-struct configuration.
 type Config struct {
 	Env    string
 	Logger logger.Config
-	// 必要に応じてDatabaseConfig等各structへ注入する設定追加
+	// Add configs for injection into structs such as DatabaseConfig as needed.
 }
 
 // NewConfig loads environment variables into Config

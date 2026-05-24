@@ -16,10 +16,10 @@ import (
 
 type Config struct {
 	Level      string // debug, info, warn, error
-	Format     string // local(見やすさ重視), cloud(CloudWatch等で解析可能であることを重視)
-	Env        string // 環境名(cloudでのみログ出力)
-	AppName    string // アプリ名(cloudでのみログ出力)
-	AppVersion string // アプリのバージョン(cloudでのみログ出力)
+	Format     string // local (readability-focused), cloud (optimized for parsing by CloudWatch etc.)
+	Env        string // environment name (logged only in cloud format)
+	AppName    string // app name (logged only in cloud format)
+	AppVersion string // app version (logged only in cloud format)
 }
 
 // localHandler outputs logs as space-separated values without key names for
@@ -182,26 +182,26 @@ func NewLogger(cfg Config) *slog.Logger {
 	var inner slog.Handler
 	switch cfg.Format {
 	case "local":
-		// local環境では読みやすさ重視
-		// (非構造化ログ、ローカルタイムゾーン、ミリ秒精度)
+		// local: prioritize readability
+		// (unstructured log, local timezone, millisecond precision)
 		inner = newLocalHandler(os.Stderr, level)
 	case "cloud":
-		// cloud環境ではcloud watch等で読まれる前提で解析重視
-		// (構造化ログ、UTC、ナノ秒精度)
+		// cloud: prioritize parseability for CloudWatch etc.
+		// (structured log, UTC, nanosecond precision)
 		opts := &slog.HandlerOptions{Level: level, AddSource: true, ReplaceAttr: cloudTimeReplacer}
 		inner = slog.NewJSONHandler(os.Stderr, opts)
 	default:
-		// LOG_FORMATが不正の場合、cloud向けフォーマットで出力
+		// fall back to cloud format if LOG_FORMAT is invalid
 		fmt.Fprintf(os.Stderr, "invalid LOG_FORMAT %q, fallback to 'cloud'\n", cfg.Format)
 		opts := &slog.HandlerOptions{Level: level, AddSource: true, ReplaceAttr: cloudTimeReplacer}
 		inner = slog.NewJSONHandler(os.Stderr, opts)
 	}
 
-	// Errorレベルにスタックトレースを付与するカスタムHandler
+	// custom handler that attaches a stack trace to Error-level records
 	handler := &customHandler{inner: inner}
 	logger := slog.New(handler)
 
-	// cloud向けはフィールド追加
+	// add standard fields for cloud format
 	if cfg.Format == "cloud" {
 		logger = logger.With(
 			slog.String("app", cfg.AppName),

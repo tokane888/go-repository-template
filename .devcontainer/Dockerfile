@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/go:2-1.25-trixie
 
-# Go を最新版に更新(devcontainer imageでは1.25までしか公開されていないため)
+# upgrade Go to the latest version (the devcontainer image only publishes up to 1.25)
 ARG GO_VERSION=1.26.2
 RUN rm -rf /usr/local/go \
     && curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o /tmp/go.tgz \
@@ -24,7 +24,7 @@ RUN npm install -g @goreleaser/goreleaser
 RUN curl -LO https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb
 RUN apt-get install -y ./git-delta_0.18.2_amd64.deb
 RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.11.4
-# /go/pkg/mod/cache/download/ 配下のownerがrootになることを防ぐためvscode user使用
+# use vscode user to prevent files under /go/pkg/mod/cache/download/ from being owned by root
 USER vscode
 RUN go install mvdan.cc/gofumpt@latest
 RUN go install golang.org/x/vuln/cmd/govulncheck@latest

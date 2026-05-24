@@ -7,12 +7,12 @@
   },
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
-    // TODO: claude code拡張。許可されない環境では除去
+    // TODO: Claude Code extension. Remove if not permitted in your environment.
     "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {},
 
     "ghcr.io/devcontainers/features/docker-outside-of-docker:latest": { "moby": false },
 
-    // keyring等でOSが保持している認証情報はマウント出来ないので、その場合はlocalで実行
+    // OS-held credentials (e.g. keyring) cannot be mounted, so run locally in that case
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   // Features to add to the dev container. More info: https://containers.dev/features.
@@ -77,19 +77,19 @@
     }
   },
   "mounts": [
-    // devcontainer上からgit pull/push可能にするための設定
+    // mount SSH keys to enable git pull/push from inside the devcontainer
     "source=${localEnv:HOME}/.ssh,target=/tmp/.ssh,type=bind,consistency=cached",
-    // github cli設定
-    // TODO: ghを使用しない場合は削除
+    // GitHub CLI configuration
+    // TODO: remove if not using gh
     "source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind,consistency=cached",
 
-    // TODO: claude codeの使用が許可されない場合は削除
+    // TODO: remove if Claude Code is not permitted in your environment
     "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.claude.json,target=/home/vscode/.claude.json,type=bind,consistency=cached"
   ],
   "postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
   "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
-  // TODO: AIを使用しない場合は削除
+  // TODO: remove if not using AI
   "remoteEnv": {
     "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
   },

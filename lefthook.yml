@@ -1,12 +1,12 @@
 ---
 pre-commit:
   commands:
-    # コミットは使用頻度が高いためgolangci-lintは実行しない
+    # golangci-lint is skipped on commit since commits happen frequently
     dprint-fmt:
       run: |
         files=$(echo "{staged_files}" | tr ' ' '\n' | grep -E '(Dockerfile|\.json|\.md)$' | grep -v 'devcontainer-lock\.json' || true)
         if [ -n "$files" ]; then
-          echo "$files" # フォーマット対象のファイル名出力(go fmt等では出力されるが、dprintでは出力されないため)
+          echo "$files" # print target file names (dprint does not print them unlike go fmt)
           echo "$files" | xargs -r dprint fmt
         fi
       stage_fixed: true
@@ -19,45 +19,45 @@ pre-commit:
           echo "$files"
           echo "$files" | xargs -r cspell --no-must-find-files || echo "⚠️  Spelling issues found. Please review and fix if necessary."
         fi
-      # エラーがあってもコミットを続行
+      # continue commit even if there are errors
       fail_text: ""
 
 pre-push:
   commands:
     golangci-lint:
-      # モノレポ構造に対応したlint実行
+      # run lint with monorepo support
       run: |
-        # go.modファイルを持つディレクトリを検索
+        # search for directories containing go.mod files
         modules=$(find . -name "go.mod" 2>/dev/null | xargs dirname | sort)
 
         if [ -z "$modules" ]; then
-          echo "go.modファイルが見つかりませんでした。"
+          echo "No go.mod files found."
           exit 0
         fi
 
-        # 各モジュールでgolangci-lintを実行
+        # run golangci-lint in each module
         has_error=0
         for module in $modules; do
           echo "Running golangci-lint in $module"
           if ! (cd "$module" && golangci-lint run ./...); then
-            echo "エラー: $module でgolangci-lintが失敗しました"
+            echo "Error: golangci-lint failed in $module"
             has_error=1
           fi
         done
 
-        # いずれかのモジュールでエラーがあった場合は終了
+        # exit if any module had errors
         if [ $has_error -eq 1 ]; then
           exit 1
         fi
     deadcode:
       run: |
-        # mainパッケージを持つgo.modのディレクトリを検索
+        # search for go.mod directories that contain a main package
         main_modules=$(find . -name "go.mod" 2>/dev/null | xargs dirname | while read dir; do
           grep -r --include="*.go" -l "^package main" "$dir" > /dev/null 2>&1 && echo "$dir"
         done | sort)
 
         if [ -z "$main_modules" ]; then
-          echo "mainパッケージが見つかりませんでした。"
+          echo "No main package found."
           exit 0
         fi
 
@@ -67,7 +67,7 @@ pre-push:
           output=$(cd "$module" && deadcode ./... 2>&1)
           if [ -n "$output" ]; then
             echo "$output"
-            echo "エラー: $module でdeadcodeが失敗しました"
+            echo "Error: deadcode failed in $module"
             has_error=1
           fi
         done

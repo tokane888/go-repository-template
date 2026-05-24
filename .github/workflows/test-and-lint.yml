@@ -21,7 +21,7 @@ jobs:
       - name: Find all Go modules
         id: find
         run: |
-          # -xオプションを指定しないとshell実行ログが出力されないため指定
+          # -x is required to print shell execution logs
           set -x
           all_modules=$(find . -name "go.mod" -print0 | xargs -0 dirname | sed 's|^\./||' | sort)
           # modules with *_test.go
@@ -33,7 +33,7 @@ jobs:
             if [ -n "$module" ] && test -n "$(find "$module" -name "*_test.go" -print -quit)"; then
               test_modules="$test_modules$module\n"
             fi
-            # mainパッケージを持つモジュールを検出
+            # detect modules that contain a main package
             if [ -n "$module" ] && grep -r --include="*.go" -l "^package main" "$module" > /dev/null 2>&1; then
               main_modules="$main_modules$module\n"
             fi
@@ -110,10 +110,10 @@ jobs:
           version: v2.11.4
           args: --config=${{ github.workspace }}/.golangci.yml
           working-directory: ${{ matrix.module }}
-          # デフォルトではcacheは`~/.cache/golangci-lint`に保存される。
-          # モノレポ構成ではrestoreに失敗するためcache無効化
+          # By default, cache is stored in `~/.cache/golangci-lint`.
+          # Disabled because cache restore fails in monorepo setups.
           skip-cache: true
-          # 緊急で修正する必要があり、lint, test等を完全に通す余力がない場合は以下のコメントアウトを解除
+          # Uncomment below if you need to bypass lint/test in an emergency
           # continue-on-error: true
   deadcode:
     name: Deadcode (${{ matrix.module }})
@@ -159,13 +159,13 @@ jobs:
       - name: Run cspell
         uses: streetsidesoftware/cspell-action@v8
         with:
-          # 変更されたファイルのみチェック
+          # check only changed files
           incremental_files_only: true
-          # PRに警告アノテーションを追加
+          # add warning annotations to PRs
           inline: warning
-          # 厳密モード無効（警告のみ、ブロックしない）
+          # strict mode disabled (warnings only, does not block)
           strict: false
-          # cspell設定ファイルを明示的に指定
+          # explicitly specify the cspell config file
           config: .cspell.json
-        # エラーがあってもジョブを失敗させない
+        # do not fail the job even if there are errors
         continue-on-error: true

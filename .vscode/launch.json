@@ -1,7 +1,7 @@
 {
-  // IntelliSenseを使用してキー バインドの詳細情報を確認します
-  // 既存の属性については、ホバーして説明を表示します
-  // 詳細情報は、https://go.microsoft.com/fwlink/?linkid=830387 をご覧ください
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
@@ -14,7 +14,7 @@
       "env": {},
       "envFile": "${workspaceFolder}/services/sample/.env/.env.local",
       "args": [],
-      "showLog": false // デバッガの詳細ログ出力。通常時はfalseで良い
+      "showLog": false // verbose debugger logging; false is fine for normal use
     }
   ]
 }

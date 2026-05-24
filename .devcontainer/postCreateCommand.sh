@@ -3,9 +3,9 @@
 lefthook install
 
 # mcp install
-# TODO: claude codeを使用しない場合削除
+# TODO: remove if not using Claude Code
 
-# context7が存在しない場合のみ追加
+# add only if context7 does not already exist
 if ! claude mcp list 2>/dev/null | grep -q "context7"; then
     echo "Adding MCP server context7..."
     claude mcp add --transport http context7 https://mcp.context7.com/mcp
@@ -13,9 +13,9 @@ else
     echo "MCP server context7 already exists, skipping..."
 fi
 
-# cipherが存在しない場合のみ追加
+# add only if cipher does not already exist
 if ! claude mcp list 2>/dev/null | grep -q "cipher"; then
-    # APIキーの存在確認
+    # check for API key
     if [ -z "$ANTHROPIC_API_KEY" ]; then
         echo "⚠️  WARNING: No API keys found for cipher MCP server."
         echo "   cipher requires: ANTHROPIC_API_KEY"
@@ -29,7 +29,7 @@ else
     echo "MCP server cipher already exists, skipping..."
 fi
 
-# serenaが存在しない場合のみ追加
+# add only if serena does not already exist
 if ! claude mcp list 2>/dev/null | grep -q "serena"; then
     echo "Adding MCP server serena..."
     claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server \
