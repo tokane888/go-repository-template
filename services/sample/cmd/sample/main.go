@@ -5,7 +5,6 @@ import (
 	"log"
 	"log/slog"
 
-	// TODO: import元調整
 	pkglogger "github.com/tokane888/go-repository-template/pkg/logger"
 	"github.com/tokane888/go-repository-template/services/sample/internal/config"
 )
