@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Run govulncheck
         # Use untagged latest release to avoid "Node.js 20 actions are deprecated" warning.
-        uses: golang/govulncheck-action@31f7c5463448f83528bd771c2d978d940080c9fd
+        uses: golang/govulncheck-action@3fa7bd9cee2cfdf3499a8803b226e43de7b7cdb4
         with:
           go-version-input: "1.26.2"
           work-dir: ${{ matrix.module }}
