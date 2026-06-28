@@ -19,9 +19,11 @@ type Config struct {
 func NewConfig(version string) (*Config, error) {
 	env := getEnv("ENV", "local")
 	envFile := ".env/.env." + env
-	err := godotenv.Load(envFile)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load %s: %w", envFile, err)
+	if env == "local" {
+		err := godotenv.Load(envFile)
+		if err != nil {
+			return nil, fmt.Errorf("failed to load %s: %w", envFile, err)
+		}
 	}
 
 	cfg := &Config{
@@ -31,7 +33,7 @@ func NewConfig(version string) (*Config, error) {
 			AppVersion: version,
 			Env:        env,
 			Level:      getEnv("LOG_LEVEL", "info"),
-			Format:     getEnv("LOG_FORMAT", "local"),
+			Format:     getEnv("LOG_FORMAT", "cloud"),
 		},
 	}
 	return cfg, nil
