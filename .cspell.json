@@ -35,6 +35,7 @@
     "multierr",
     "nolint",
     "opencontainers",
+    "parseability",
     "pkglogger",
     "shellcheck",
     "testutil",
