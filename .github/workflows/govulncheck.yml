@@ -44,7 +44,7 @@ jobs:
         # Use untagged latest release to avoid "Node.js 20 actions are deprecated" warning.
         uses: golang/govulncheck-action@3fa7bd9cee2cfdf3499a8803b226e43de7b7cdb4
         with:
-          go-version-input: "1.26.2"
+          go-version-input: "1.26.5"
           work-dir: ${{ matrix.module }}
           go-package: ./...
           cache: false # suppress warnings from searching for go.sum at the repository root
