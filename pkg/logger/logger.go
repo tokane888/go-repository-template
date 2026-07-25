@@ -164,16 +164,16 @@ func (h *customHandler) WithGroup(name string) slog.Handler {
 	return &customHandler{inner: h.inner.WithGroup(name)}
 }
 
-// stackFrame は1フレーム分のスタックトレース情報
+// stackFrame is stack trace information for 1 frame
 type stackFrame struct {
 	Function string `json:"function"`
 	File     string `json:"file"`
 	Line     int    `json:"line"`
 }
 
-// captureStackFrames は呼び出し元のスタックを構造化フレームの配列として取得する。
-// slog自身のフレームや本パッケージ自身のフレームは除外し、
-// 実際のアプリケーションコードのフレームのみを残す。
+// captureStackFrames get caller stack as array of structured frame.
+// Remove frame of Slog and this package.
+// Only leave frame of main app.
 func captureStackFrames() []stackFrame {
 	const maxDepth = 32
 	var pcs [maxDepth]uintptr
