@@ -1,7 +1,7 @@
 // TODO: search and replace the module name below across the git repository
 module github.com/tokane888/go-repository-template/services/sample
 
-go 1.26.2
+go 1.26.5
 
 require (
 	github.com/joho/godotenv v1.5.1

@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/devcontainers/go:2-1.25-trixie
+FROM mcr.microsoft.com/devcontainers/go:1.26-trixie
 
 # upgrade Go to the latest version (the devcontainer image only publishes up to 1.25)
-ARG GO_VERSION=1.26.2
+ARG GO_VERSION=1.26.5
 RUN rm -rf /usr/local/go \
     && curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o /tmp/go.tgz \
     && tar -C /usr/local -xzf /tmp/go.tgz \
