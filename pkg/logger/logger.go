@@ -149,9 +149,9 @@ func (h *customHandler) Enabled(ctx context.Context, level slog.Level) bool {
 
 func (h *customHandler) Handle(ctx context.Context, r slog.Record) error {
 	if r.Level >= slog.LevelError {
-		buf := make([]byte, 4096)
-		n := runtime.Stack(buf, false)
-		r.AddAttrs(slog.String("stacktrace", string(buf[:n])))
+		if frames := captureStackFrames(); len(frames) > 0 {
+			r.AddAttrs(slog.Any("stacktrace", frames))
+		}
 	}
 	return h.inner.Handle(ctx, r)
 }
@@ -162,6 +162,45 @@ func (h *customHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
 
 func (h *customHandler) WithGroup(name string) slog.Handler {
 	return &customHandler{inner: h.inner.WithGroup(name)}
+}
+
+// stackFrame は1フレーム分のスタックトレース情報
+type stackFrame struct {
+	Function string `json:"function"`
+	File     string `json:"file"`
+	Line     int    `json:"line"`
+}
+
+// captureStackFrames は呼び出し元のスタックを構造化フレームの配列として取得する。
+// slog自身のフレームや本パッケージ自身のフレームは除外し、
+// 実際のアプリケーションコードのフレームのみを残す。
+func captureStackFrames() []stackFrame {
+	const maxDepth = 32
+	var pcs [maxDepth]uintptr
+	n := runtime.Callers(0, pcs[:])
+	frames := runtime.CallersFrames(pcs[:n])
+
+	result := make([]stackFrame, 0, n)
+	for {
+		frame, more := frames.Next()
+		if !shouldSkipFrame(frame) {
+			result = append(result, stackFrame{
+				Function: frame.Function,
+				File:     frame.File,
+				Line:     frame.Line,
+			})
+		}
+		if !more {
+			break
+		}
+	}
+	return result
+}
+
+func shouldSkipFrame(f runtime.Frame) bool {
+	return strings.HasPrefix(f.Function, "runtime.") ||
+		strings.HasPrefix(f.Function, "log/slog.") ||
+		strings.Contains(f.File, "/pkg/logger/logger.go")
 }
 
 func cloudTimeReplacer(_ []string, a slog.Attr) slog.Attr {
