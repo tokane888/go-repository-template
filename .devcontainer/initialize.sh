@@ -5,7 +5,7 @@ WORKSPACE_FOLDER="$1"
 WORKSPACE_BASENAME="$2"
 ENV_FILE="${WORKSPACE_FOLDER}/.devcontainer/.env"
 
-MAIN_GIT_DIR=$(realpath "$(git rev-parse --git-common-dir)")
+MAIN_GIT_DIR=$(git -C "${WORKSPACE_FOLDER}" rev-parse --path-format=absolute --git-common-dir)
 
 # Output environment variable to .env file.
 # .env file is read by docker-compose.yml.
