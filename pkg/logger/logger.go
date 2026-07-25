@@ -166,7 +166,7 @@ func (h *customHandler) WithGroup(name string) slog.Handler {
 
 func cloudTimeReplacer(_ []string, a slog.Attr) slog.Attr {
 	if a.Key == slog.TimeKey {
-		return slog.String(slog.TimeKey, a.Value.Time().UTC().Format(time.RFC3339Nano))
+		return slog.String(slog.TimeKey, a.Value.Time().UTC().Format("2006-01-02T15:04:05.000Z07:00"))
 	}
 	return a
 }
@@ -182,11 +182,11 @@ func NewLogger(cfg Config) *slog.Logger {
 	switch cfg.Format {
 	case "local":
 		// local: prioritize readability
-		// (unstructured log, local timezone, millisecond precision)
+		// (unstructured log, local timezone)
 		inner = newLocalHandler(os.Stderr, level)
 	case "cloud":
 		// cloud: prioritize parseability for CloudWatch etc.
-		// (structured log, UTC, nanosecond precision)
+		// (structured log, UTC)
 		opts := &slog.HandlerOptions{Level: level, AddSource: true, ReplaceAttr: cloudTimeReplacer}
 		inner = slog.NewJSONHandler(os.Stderr, opts)
 	default:
