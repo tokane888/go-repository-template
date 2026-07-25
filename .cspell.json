@@ -43,10 +43,7 @@
     "tokane",
     "trimpath",
     "usecase",
+    "worktree",
     "yzhang"
-  ],
-  // TODO: remove if Japanese not used
-  "ignoreRegExpList": [
-    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+" // exclude Japanese characters because spell check does not work correctly on them
   ]
 }

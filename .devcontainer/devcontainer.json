@@ -2,9 +2,9 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
   "name": "Go",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "initializeCommand": "bash ${localWorkspaceFolder}/.devcontainer/initialize.sh ${localWorkspaceFolder} ${localWorkspaceFolderBasename}",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
     // TODO: Claude Code extension. Remove if not permitted in your environment.
