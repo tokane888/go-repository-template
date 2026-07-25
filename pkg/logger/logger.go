@@ -18,7 +18,6 @@ type Config struct {
 	Level      string // debug, info, warn, error
 	Format     string // local (readability-focused), cloud (optimized for parsing by CloudWatch etc.)
 	Env        string // environment name (logged only in cloud format)
-	AppName    string // app name (logged only in cloud format)
 	AppVersion string // app version (logged only in cloud format)
 }
 
@@ -204,7 +203,6 @@ func NewLogger(cfg Config) *slog.Logger {
 	// add standard fields for cloud format
 	if cfg.Format == "cloud" {
 		logger = logger.With(
-			slog.String("app", cfg.AppName),
 			slog.String("env", cfg.Env),
 			slog.String("ver", cfg.AppVersion),
 		)

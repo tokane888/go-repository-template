@@ -29,7 +29,6 @@ func NewConfig(version string) (*Config, error) {
 	cfg := &Config{
 		Env: env,
 		Logger: logger.Config{
-			AppName:    getEnv("APP_NAME", ""),
 			AppVersion: version,
 			Env:        env,
 			Level:      getEnv("LOG_LEVEL", "info"),
