@@ -1,0 +1,11 @@
+name: ${WORKSPACE_BASENAME}
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/workspaces/${WORKSPACE_BASENAME}:cached
+      - ${MAIN_GIT_DIR}:${MAIN_GIT_DIR}:cached # mount directory which is referenced by git worktree
+    command: sleep infinity

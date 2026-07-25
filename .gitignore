@@ -8,3 +8,5 @@
 data
 # Added by goreleaser init:
 dist/
+# environment variable file used for git worktree support
+.devcontainer/.env
