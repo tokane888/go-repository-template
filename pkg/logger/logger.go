@@ -178,6 +178,9 @@ func captureStackFrames() []stackFrame {
 	const maxDepth = 32
 	var pcs [maxDepth]uintptr
 	n := runtime.Callers(0, pcs[:])
+	if n == 0 {
+		return nil
+	}
 	frames := runtime.CallersFrames(pcs[:n])
 
 	result := make([]stackFrame, 0, n)
