@@ -39,6 +39,7 @@ func Test_localHandler(t *testing.T) {
 			setup:    func(h *localHandler) *slog.Logger { return slog.New(&customHandler{inner: h}) },
 			logFn:    func(l *slog.Logger) { l.Error("boom") },
 			contains: []string{"ERROR", "boom", "stacktrace="},
+			absent:   []string{"/pkg/logger/"},
 		},
 		{
 			name: "DEBUG log is filtered when level is INFO",
