@@ -18,7 +18,6 @@ type Config struct {
 	Level      string // debug, info, warn, error
 	Format     string // local (readability-focused), cloud (optimized for parsing by CloudWatch etc.)
 	Env        string // environment name (logged only in cloud format)
-	AppName    string // app name (logged only in cloud format)
 	AppVersion string // app version (logged only in cloud format)
 }
 
@@ -150,9 +149,9 @@ func (h *customHandler) Enabled(ctx context.Context, level slog.Level) bool {
 
 func (h *customHandler) Handle(ctx context.Context, r slog.Record) error {
 	if r.Level >= slog.LevelError {
-		buf := make([]byte, 4096)
-		n := runtime.Stack(buf, false)
-		r.AddAttrs(slog.String("stacktrace", string(buf[:n])))
+		if frames := captureStackFrames(); len(frames) > 0 {
+			r.AddAttrs(slog.Any("stacktrace", frames))
+		}
 	}
 	return h.inner.Handle(ctx, r)
 }
@@ -165,9 +164,51 @@ func (h *customHandler) WithGroup(name string) slog.Handler {
 	return &customHandler{inner: h.inner.WithGroup(name)}
 }
 
+// stackFrame is stack trace information for 1 frame
+type stackFrame struct {
+	Function string `json:"function"`
+	File     string `json:"file"`
+	Line     int    `json:"line"`
+}
+
+// captureStackFrames get caller stack as array of structured frame.
+// Remove frame of Slog and this package.
+// Only leave frame of main app.
+func captureStackFrames() []stackFrame {
+	const maxDepth = 32
+	var pcs [maxDepth]uintptr
+	n := runtime.Callers(0, pcs[:])
+	if n == 0 {
+		return nil
+	}
+	frames := runtime.CallersFrames(pcs[:n])
+
+	result := make([]stackFrame, 0, n)
+	for {
+		frame, more := frames.Next()
+		if !shouldSkipFrame(frame) {
+			result = append(result, stackFrame{
+				Function: frame.Function,
+				File:     frame.File,
+				Line:     frame.Line,
+			})
+		}
+		if !more {
+			break
+		}
+	}
+	return result
+}
+
+func shouldSkipFrame(f runtime.Frame) bool {
+	return strings.HasPrefix(f.Function, "runtime.") ||
+		strings.HasPrefix(f.Function, "log/slog.") ||
+		strings.Contains(f.File, "/pkg/logger/")
+}
+
 func cloudTimeReplacer(_ []string, a slog.Attr) slog.Attr {
 	if a.Key == slog.TimeKey {
-		return slog.String(slog.TimeKey, a.Value.Time().UTC().Format(time.RFC3339Nano))
+		return slog.String(slog.TimeKey, a.Value.Time().UTC().Format("2006-01-02T15:04:05.000Z07:00"))
 	}
 	return a
 }
@@ -183,11 +224,11 @@ func NewLogger(cfg Config) *slog.Logger {
 	switch cfg.Format {
 	case "local":
 		// local: prioritize readability
-		// (unstructured log, local timezone, millisecond precision)
+		// (unstructured log, local timezone)
 		inner = newLocalHandler(os.Stderr, level)
 	case "cloud":
 		// cloud: prioritize parseability for CloudWatch etc.
-		// (structured log, UTC, nanosecond precision)
+		// (structured log, UTC)
 		opts := &slog.HandlerOptions{Level: level, AddSource: true, ReplaceAttr: cloudTimeReplacer}
 		inner = slog.NewJSONHandler(os.Stderr, opts)
 	default:
@@ -204,7 +245,6 @@ func NewLogger(cfg Config) *slog.Logger {
 	// add standard fields for cloud format
 	if cfg.Format == "cloud" {
 		logger = logger.With(
-			slog.String("app", cfg.AppName),
 			slog.String("env", cfg.Env),
 			slog.String("ver", cfg.AppVersion),
 		)

@@ -2,77 +2,107 @@ package logger
 
 import (
 	"bytes"
+	"io"
 	"log/slog"
+	"os"
 	"strings"
 	"testing"
 )
 
-func Test_localHandler(t *testing.T) {
+func Test_NewLogger(t *testing.T) {
 	tests := []struct {
 		name     string
-		setup    func(h *localHandler) *slog.Logger
+		cfg      Config
 		logFn    func(l *slog.Logger)
 		contains []string
 		absent   []string
 	}{
 		{
-			name:     "basic INFO log has no key names for built-in fields",
-			setup:    func(h *localHandler) *slog.Logger { return slog.New(&customHandler{inner: h}) },
+			name:     "local format: basic INFO log has no key names for built-in fields",
+			cfg:      Config{Level: "debug", Format: "local"},
 			logFn:    func(l *slog.Logger) { l.Info("hello world") },
 			contains: []string{"INFO", "hello world"},
 			absent:   []string{"time=", "level=", "source=", "msg="},
 		},
 		{
-			name:     "custom attr uses key=value format",
-			setup:    func(h *localHandler) *slog.Logger { return slog.New(&customHandler{inner: h}) },
+			name:     "local format: custom attr uses key=value format",
+			cfg:      Config{Level: "debug", Format: "local"},
 			logFn:    func(l *slog.Logger) { l.Info("msg", slog.String("env", "dev")) },
 			contains: []string{"env=dev"},
 		},
 		{
-			name:     "attr value with spaces is quoted",
-			setup:    func(h *localHandler) *slog.Logger { return slog.New(&customHandler{inner: h}) },
+			name:     "local format: attr value with spaces is quoted",
+			cfg:      Config{Level: "debug", Format: "local"},
 			logFn:    func(l *slog.Logger) { l.Info("msg", slog.String("k", "v a")) },
 			contains: []string{`k="v a"`},
 		},
 		{
-			name:     "ERROR log contains stacktrace",
-			setup:    func(h *localHandler) *slog.Logger { return slog.New(&customHandler{inner: h}) },
+			name:     "local format: ERROR log contains stacktrace",
+			cfg:      Config{Level: "debug", Format: "local"},
 			logFn:    func(l *slog.Logger) { l.Error("boom") },
 			contains: []string{"ERROR", "boom", "stacktrace="},
+			absent:   []string{"/pkg/logger/"},
 		},
 		{
-			name: "DEBUG log is filtered when level is INFO",
-			setup: func(h *localHandler) *slog.Logger {
-				h.level = slog.LevelInfo
-				return slog.New(&customHandler{inner: h})
-			},
+			name:   "local format: DEBUG log is filtered when level is INFO",
+			cfg:    Config{Level: "info", Format: "local"},
 			logFn:  func(l *slog.Logger) { l.Debug("hidden") },
 			absent: []string{"hidden"},
 		},
 		{
-			name: "With() pre-attrs appear in output",
-			setup: func(h *localHandler) *slog.Logger {
-				return slog.New(&customHandler{inner: h}).With(slog.String("app", "svc"))
-			},
-			logFn:    func(l *slog.Logger) { l.Info("msg") },
+			name:     "local format: With() pre-attrs appear in output",
+			cfg:      Config{Level: "debug", Format: "local"},
+			logFn:    func(l *slog.Logger) { l.With(slog.String("app", "svc")).Info("msg") },
 			contains: []string{"app=svc"},
 		},
 		{
-			name: "WithGroup() prefixes attr keys",
-			setup: func(h *localHandler) *slog.Logger {
-				return slog.New(&customHandler{inner: h}).WithGroup("grp")
-			},
-			logFn:    func(l *slog.Logger) { l.Info("msg", slog.String("k", "v")) },
+			name:     "local format: WithGroup() prefixes attr keys",
+			cfg:      Config{Level: "debug", Format: "local"},
+			logFn:    func(l *slog.Logger) { l.WithGroup("grp").Info("msg", slog.String("k", "v")) },
 			contains: []string{"grp.k=v"},
+		},
+		{
+			name:     "cloud format: emits JSON with env/ver fields",
+			cfg:      Config{Level: "info", Format: "cloud", Env: "prod", AppVersion: "1.2.3"},
+			logFn:    func(l *slog.Logger) { l.Info("hello") },
+			contains: []string{`"msg":"hello"`, `"env":"prod"`, `"ver":"1.2.3"`},
+		},
+		{
+			name:     "invalid format falls back to cloud JSON with warning",
+			cfg:      Config{Level: "info", Format: "bogus"},
+			logFn:    func(l *slog.Logger) { l.Info("hello") },
+			contains: []string{"invalid LOG_FORMAT", `"msg":"hello"`},
+		},
+		{
+			name:     "invalid level falls back to info with warning",
+			cfg:      Config{Level: "bogus", Format: "cloud"},
+			logFn:    func(l *slog.Logger) { l.Debug("hidden"); l.Info("shown") },
+			contains: []string{"invalid LOG_LEVEL", `"msg":"shown"`},
+			absent:   []string{"hidden"},
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			var buf bytes.Buffer
-			h := newLocalHandler(&buf, slog.LevelDebug)
-			logger := tt.setup(h)
+			r, w, err := os.Pipe()
+			if err != nil {
+				t.Fatal(err)
+			}
+			orig := os.Stderr
+			os.Stderr = w
+
+			logger := NewLogger(tt.cfg)
 			tt.logFn(logger)
+
+			os.Stderr = orig
+			if err := w.Close(); err != nil {
+				t.Fatal(err)
+			}
+
+			var buf bytes.Buffer
+			if _, err := io.Copy(&buf, r); err != nil {
+				t.Fatal(err)
+			}
 			out := buf.String()
 			t.Log(out)
 
