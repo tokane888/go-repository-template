@@ -203,7 +203,7 @@ func captureStackFrames() []stackFrame {
 func shouldSkipFrame(f runtime.Frame) bool {
 	return strings.HasPrefix(f.Function, "runtime.") ||
 		strings.HasPrefix(f.Function, "log/slog.") ||
-		strings.Contains(f.File, "/pkg/logger/logger.go")
+		strings.Contains(f.File, "/pkg/logger/")
 }
 
 func cloudTimeReplacer(_ []string, a slog.Attr) slog.Attr {
