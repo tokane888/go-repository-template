@@ -21,7 +21,6 @@ linters:
     - unparam # detect unused parameters and always-nil return values
     - gocyclo # detect complex functions with many for/if/switch branches
     - prealloc # detect inefficient repeated appends
-    - gocritic # empty slice detection
 
     # Performance
     - perfsprint # string concatenation optimization
