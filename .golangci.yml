@@ -21,6 +21,7 @@ linters:
     - unparam # detect unused parameters and always-nil return values
     - gocyclo # detect complex functions with many for/if/switch branches
     - prealloc # detect inefficient repeated appends
+    - modernize # gopls-based suggestions to rewrite code using modern Go features (e.g. interface{}→any)
 
     # Performance
     - perfsprint # string concatenation optimization
