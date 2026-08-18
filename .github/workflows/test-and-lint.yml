@@ -157,7 +157,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run cspell
-        uses: streetsidesoftware/cspell-action@v8
+        uses: streetsidesoftware/cspell-action@v9
         with:
           # check only changed files
           incremental_files_only: true
