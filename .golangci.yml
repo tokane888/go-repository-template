@@ -22,6 +22,7 @@ linters:
     - gocyclo # detect complex functions with many for/if/switch branches
     - prealloc # detect inefficient repeated appends
     - modernize # gopls-based suggestions to rewrite code using modern Go features (e.g. interface{}→any)
+    - lll # enforce max line length
 
     # Performance
     - perfsprint # string concatenation optimization
@@ -39,6 +40,8 @@ linters:
         - G112 # Potential Slowloris Attack (ReadHeaderTimeout)
     unparam:
       check-exported: true
+    lll:
+      line-length: 120
   exclusions:
     rules:
       # disable some linters for test files
