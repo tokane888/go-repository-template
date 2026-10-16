@@ -1,7 +1,7 @@
-FROM mcr.microsoft.com/devcontainers/go:1.26-trixie
+FROM mcr.microsoft.com/devcontainers/go:1.27-trixie
 
 # upgrade Go to the latest version (the devcontainer image only publishes up to 1.25)
-ARG GO_VERSION=1.26.5
+ARG GO_VERSION=1.27.2
 RUN rm -rf /usr/local/go \
     && curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o /tmp/go.tgz \
     && tar -C /usr/local -xzf /tmp/go.tgz \
@@ -23,7 +23,7 @@ RUN npm install -g @goreleaser/goreleaser
 # install other packages
 RUN curl -LO https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb
 RUN apt-get install -y ./git-delta_0.18.2_amd64.deb
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.11.4
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.15.0
 # use vscode user to prevent files under /go/pkg/mod/cache/download/ from being owned by root
 USER vscode
 RUN go install mvdan.cc/gofumpt@latest
