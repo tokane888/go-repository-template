@@ -17,10 +17,6 @@ Template repository for Go monorepo architecture
 └── README.md
 ```
 
-## Development Environment Setup
-
-- Start the devcontainer
-
 ## Design Principles
 
 - Directory structure follows [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_ja.md#standard-go-project-layout)
