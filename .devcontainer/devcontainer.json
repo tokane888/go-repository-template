@@ -89,10 +89,6 @@
   ],
   "postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
   "postStartCommand": "bash ./.devcontainer/postStartCommand.sh",
-  // TODO: remove if not using AI
-  "remoteEnv": {
-    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
-  },
   "containerEnv": {
     "TZ": "Asia/Tokyo"
   }
